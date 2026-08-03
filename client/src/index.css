@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dark: #0B0C10;
+  --color-darker: #1F2833;
+  --color-neonCyan: #66FCF1;
+  --color-neonTeal: #45A29E;
+  --color-textLight: #C5C6C7;
+}
+
+body {
+  @apply bg-dark text-textLight m-0 p-0 font-sans;
+}
