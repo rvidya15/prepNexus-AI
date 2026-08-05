@@ -65,4 +65,23 @@ router.get('/profile', protect, async (req, res) => {
   res.json(req.user);
 });
 
+// @route PUT /api/users/profile
+router.put('/profile', protect, async (req, res) => {
+  try {
+    const { targetExam, examDate, subjects } = req.body;
+    
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    if (targetExam) user.academicProfile.targetExam = targetExam;
+    if (examDate) user.academicProfile.examDate = examDate;
+    if (subjects) user.academicProfile.subjects = subjects;
+
+    await user.save();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
