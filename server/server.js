@@ -11,6 +11,7 @@ const workspaceRoutes = require('./routes/workspaceRoutes');
 const questionRoutes = require('./routes/questionRoutes');
 const aiRoutes = require('./routes/aiRoutes');
 const stripeRoutes = require('./routes/stripeRoutes');
+const noteRoutes = require('./routes/noteRoutes');
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use('/api/workspaces', workspaceRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/stripe', stripeRoutes);
+app.use('/api/notes', noteRoutes);
 
 // Health Check
 app.get('/health', (req, res) => {

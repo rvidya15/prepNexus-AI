@@ -89,6 +89,24 @@ const Dashboard = () => {
               >
                 <BookOpen className="w-5 h-5" /> Visual Revision Sheets
               </button>
+              <button 
+                onClick={() => navigate('/quiz')}
+                className="w-full bg-yellow-400/10 hover:bg-yellow-400/20 text-yellow-400 border border-yellow-400 transition-all py-3 rounded-lg flex justify-center items-center gap-2"
+              >
+                <Flame className="w-5 h-5" /> Weekly Quiz
+              </button>
+              <button 
+                onClick={() => navigate('/notes')}
+                className="w-full bg-green-500/10 hover:bg-green-500/20 text-green-500 border border-green-500 transition-all py-3 rounded-lg flex justify-center items-center gap-2"
+              >
+                <BookOpen className="w-5 h-5" /> My Notes
+              </button>
+              <button 
+                onClick={() => navigate('/pyqs')}
+                className="w-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-500 border border-purple-500 transition-all py-3 rounded-lg flex justify-center items-center gap-2"
+              >
+                <BrainCircuit className="w-5 h-5" /> PYQ Analyzer
+              </button>
             </div>
           </div>
         </motion.div>

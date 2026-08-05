@@ -6,6 +6,9 @@ import RevisionSheet from './pages/RevisionSheet';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Onboarding from './pages/Onboarding';
+import Notes from './pages/Notes';
+import PYQBrowser from './pages/PYQBrowser';
+import WeeklyQuiz from './pages/WeeklyQuiz';
 import { useAuthStore } from './store/useAuthStore';
 
 // Simple protected route component
@@ -50,6 +53,9 @@ function App() {
         <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/tutor" element={<ProtectedRoute><TutorSession /></ProtectedRoute>} />
         <Route path="/revision" element={<ProtectedRoute><RevisionSheet /></ProtectedRoute>} />
+        <Route path="/notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />
+        <Route path="/pyqs" element={<ProtectedRoute><PYQBrowser /></ProtectedRoute>} />
+        <Route path="/quiz" element={<ProtectedRoute><WeeklyQuiz /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
