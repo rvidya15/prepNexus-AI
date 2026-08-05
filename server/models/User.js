@@ -6,11 +6,15 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   passwordHash: { type: String, required: true },
   
+  fullName: { type: String },
   // Academic Profile
   academicProfile: {
     targetExam: { type: String, required: true }, // e.g., UPSC, GATE, CBSE Class 12
     subjects: [{ type: String }],
-    examDate: { type: Date }
+    examDate: { type: Date },
+    studyDaysPerWeek: { type: Number },
+    preparationStyle: { type: String },
+    specificGoals: { type: String }
   },
 
   // Monetization & AI Credits

@@ -15,9 +15,13 @@ const Onboarding = () => {
   const isLoading = useAuthStore((state) => state.isLoading);
   
   const [formData, setFormData] = useState({
+    fullName: '',
     targetExam: '',
     examDate: '',
-    subjects: ''
+    subjects: '',
+    studyDaysPerWeek: '',
+    preparationStyle: '',
+    specificGoals: ''
   });
   const [error, setError] = useState('');
 
@@ -29,9 +33,13 @@ const Onboarding = () => {
     }
     try {
       await updateProfile({
+        fullName: formData.fullName || undefined,
         targetExam: formData.targetExam,
         examDate: formData.examDate || undefined,
-        subjects: formData.subjects.split(',').map(s => s.trim()).filter(Boolean)
+        subjects: formData.subjects.split(',').map(s => s.trim()).filter(Boolean),
+        studyDaysPerWeek: formData.studyDaysPerWeek || undefined,
+        preparationStyle: formData.preparationStyle || undefined,
+        specificGoals: formData.specificGoals || undefined
       });
       navigate('/');
     } catch (err) {
@@ -59,6 +67,19 @@ const Onboarding = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-gray-300 font-semibold mb-2 flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-neonTeal" /> Full Name (Optional)
+            </label>
+            <input 
+              type="text" 
+              placeholder="e.g., John Doe"
+              className="w-full bg-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonCyan transition"
+              value={formData.fullName}
+              onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+            />
+          </div>
+
           <div>
             <label className="block text-gray-300 font-semibold mb-2 flex items-center gap-2">
               <Target className="w-4 h-4 text-neonTeal" /> What exam are you preparing for?
@@ -97,6 +118,52 @@ const Onboarding = () => {
               className="w-full bg-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonCyan transition"
               value={formData.subjects}
               onChange={(e) => setFormData({...formData, subjects: e.target.value})}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-gray-300 font-semibold mb-2 flex items-center gap-2 text-sm">
+                How many days per week can you study?
+              </label>
+              <input 
+                type="number" 
+                min="1"
+                max="7"
+                placeholder="e.g., 5"
+                className="w-full bg-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonCyan transition"
+                value={formData.studyDaysPerWeek}
+                onChange={(e) => setFormData({...formData, studyDaysPerWeek: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className="block text-gray-300 font-semibold mb-2 flex items-center gap-2 text-sm">
+                Preparation Style
+              </label>
+              <select 
+                className="w-full bg-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonCyan transition"
+                value={formData.preparationStyle}
+                onChange={(e) => setFormData({...formData, preparationStyle: e.target.value})}
+              >
+                <option value="">Select style...</option>
+                <option value="Self Study">Self Study</option>
+                <option value="Crash Course">Crash Course</option>
+                <option value="Deep Conceptual Dive">Deep Conceptual Dive</option>
+                <option value="Exam Oriented Practice">Exam Oriented Practice</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-gray-300 font-semibold mb-2 flex items-center gap-2">
+              Specific goals or weak areas? (Optional)
+            </label>
+            <textarea 
+              rows="3"
+              placeholder="e.g., I struggle with Organic Chemistry and need more practice problems."
+              className="w-full bg-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonCyan transition"
+              value={formData.specificGoals}
+              onChange={(e) => setFormData({...formData, specificGoals: e.target.value})}
             />
           </div>
 

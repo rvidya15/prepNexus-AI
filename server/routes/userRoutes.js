@@ -68,14 +68,18 @@ router.get('/profile', protect, async (req, res) => {
 // @route PUT /api/users/profile
 router.put('/profile', protect, async (req, res) => {
   try {
-    const { targetExam, examDate, subjects } = req.body;
+    const { targetExam, examDate, subjects, fullName, studyDaysPerWeek, preparationStyle, specificGoals } = req.body;
     
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
+    if (fullName) user.fullName = fullName;
     if (targetExam) user.academicProfile.targetExam = targetExam;
     if (examDate) user.academicProfile.examDate = examDate;
     if (subjects) user.academicProfile.subjects = subjects;
+    if (studyDaysPerWeek) user.academicProfile.studyDaysPerWeek = studyDaysPerWeek;
+    if (preparationStyle) user.academicProfile.preparationStyle = preparationStyle;
+    if (specificGoals) user.academicProfile.specificGoals = specificGoals;
 
     await user.save();
     res.json(user);
