@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: studyworkspace-api
+    name: prepnexus-ai-api
     env: node
     buildCommand: npm install
     startCommand: node server.js

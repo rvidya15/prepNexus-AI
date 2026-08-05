@@ -44,7 +44,7 @@ app.use('/api/stripe', stripeRoutes);
 
 // Health Check
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK', message: 'StudyWorkspace API is running' });
+  res.status(200).json({ status: 'OK', message: 'PrepNexus-AI API is running' });
 });
 
 const PORT = process.env.PORT || 5000;

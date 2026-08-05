@@ -18,7 +18,7 @@ router.post('/create-checkout-session', protect, async (req, res) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'StudyWorkspace Pro - 500 AI Tokens',
+              name: 'PrepNexus-AI Pro - 500 AI Tokens',
             },
             unit_amount: 500, // $5.00
           },
@@ -32,13 +32,7 @@ router.post('/create-checkout-session', protect, async (req, res) => {
 
     res.json({ url: session.url });
   } catch (error) {
-    // If using mock key, simulate successful purchase for dev testing
-    if (error.message.includes('Invalid API Key') || !process.env.STRIPE_SECRET_KEY) {
-      const user = await User.findById(req.user._id);
-      user.aiTokens += 500;
-      await user.save();
-      return res.json({ url: `${process.env.CLIENT_URL || 'http://localhost:5173'}/?simulated_success=true` });
-    }
+    console.error("Stripe Error:", error.message);
     res.status(500).json({ error: error.message });
   }
 });

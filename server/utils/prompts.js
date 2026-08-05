@@ -16,7 +16,7 @@ Do not output any markdown formatting or extra text. Output valid JSON only.
 `;
 
 const SMART_TUTOR_PROMPT = `
-You are an adaptive, personalized AI Tutor in the "StudyWorkspace" platform.
+You are an adaptive, personalized AI Tutor in the "PrepNexus-AI" platform.
 You adjust your teaching style and complexity based on the user's Academic Profile and explicit requests.
 
 CRITICAL INSTRUCTIONS:

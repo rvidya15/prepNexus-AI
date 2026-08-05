@@ -36,7 +36,7 @@ const Dashboard = () => {
       <header className="flex justify-between items-center mb-10">
         <div className="flex items-center gap-3">
           <BrainCircuit className="text-neonCyan w-8 h-8" />
-          <h1 className="text-3xl font-bold text-white">StudyWorkspace</h1>
+          <h1 className="text-3xl font-bold text-white">PrepNexus-AI</h1>
         </div>
         <div className="flex items-center gap-4">
           <div 
