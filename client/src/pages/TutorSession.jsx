@@ -31,7 +31,7 @@ const TutorSession = () => {
     } catch (err) {
       setMessages([...newMsgs, { 
         role: 'ai', 
-        content: "Sorry, I am having trouble connecting to my neural net right now!"
+        content: err.response?.status === 402 ? "You're out of tokens! Please buy more." : "Sorry, I am having trouble connecting to my neural net right now! Please check your API Key settings."
       }]);
     } finally {
       setIsLoading(false);
@@ -39,14 +39,14 @@ const TutorSession = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark flex flex-col items-center justify-center p-4">
+    <div className="flex flex-col items-center justify-center p-4 h-full">
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-3xl h-[85vh] bg-darker/90 backdrop-blur-xl border border-neonTeal/30 rounded-2xl shadow-[0_0_40px_rgba(69,162,158,0.15)] flex flex-col overflow-hidden"
+        className="w-full max-w-3xl h-[85vh] dark:bg-darker/90 bg-white/90 backdrop-blur-xl border dark:border-neonTeal/30 border-indigo-200 rounded-2xl shadow-xl flex flex-col overflow-hidden"
       >
         {/* Header */}
-        <div className="p-4 border-b border-neonTeal/20 flex items-center gap-4 bg-darker/50">
+        <div className="p-4 border-b dark:border-neonTeal/20 border-indigo-100 flex items-center gap-4 dark:bg-darker/50 bg-indigo-50/50">
           <button onClick={() => navigate('/')} className="text-gray-400 hover:text-white transition">
             <ArrowLeft />
           </button>
@@ -63,10 +63,10 @@ const TutorSession = () => {
               animate={{ opacity: 1, y: 0 }}
               className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
             >
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-lg ${msg.role === 'user' ? 'bg-neonTeal' : 'bg-neonCyan/20'}`}>
-                {msg.role === 'user' ? <User className="w-5 h-5 text-dark" /> : <Bot className="w-5 h-5 text-neonCyan" />}
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-lg ${msg.role === 'user' ? 'dark:bg-neonTeal bg-indigo-500' : 'dark:bg-neonCyan/20 bg-indigo-100'}`}>
+                {msg.role === 'user' ? <User className="w-5 h-5 dark:text-dark text-white" /> : <Bot className="w-5 h-5 dark:text-neonCyan text-indigo-600" />}
               </div>
-              <div className={`max-w-[70%] p-4 rounded-2xl shadow-md ${msg.role === 'user' ? 'bg-neonTeal text-dark rounded-tr-none' : 'bg-dark border border-neonTeal/30 text-textLight rounded-tl-none'}`}>
+              <div className={`max-w-[70%] p-4 rounded-2xl shadow-md ${msg.role === 'user' ? 'dark:bg-neonTeal bg-indigo-500 dark:text-dark text-white rounded-tr-none' : 'dark:bg-dark bg-gray-50 border dark:border-neonTeal/30 border-gray-200 text-inherit rounded-tl-none'}`}>
                 <p className="whitespace-pre-wrap">{typeof msg.content === 'string' ? msg.content.replace(/\[ACTION_ITEM\].*/g, '') : (msg.content ? JSON.stringify(msg.content) : "No content")}</p>
                 
                 {/* Parse Action Item if present */}
@@ -93,7 +93,7 @@ const TutorSession = () => {
         )}
 
         {/* Input Area */}
-        <div className="p-4 bg-darker border-t border-neonTeal/20">
+        <div className="p-4 dark:bg-darker bg-white border-t dark:border-neonTeal/20 border-indigo-100">
           <div className="flex gap-2">
             <input 
               type="text" 
@@ -101,7 +101,7 @@ const TutorSession = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Ask the AI Tutor anything..." 
-              className="flex-1 bg-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonCyan transition"
+              className="flex-1 dark:bg-dark bg-gray-50 border dark:border-gray-700 border-gray-300 rounded-xl px-4 py-3 focus:outline-none dark:focus:border-neonCyan focus:border-indigo-500 transition"
             />
             <button 
               onClick={handleSend}

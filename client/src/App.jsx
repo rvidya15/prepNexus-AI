@@ -10,17 +10,16 @@ import Notes from './pages/Notes';
 import PYQBrowser from './pages/PYQBrowser';
 import WeeklyQuiz from './pages/WeeklyQuiz';
 import { useAuthStore } from './store/useAuthStore';
+import AppLayout from './components/layout/AppLayout';
 
 // Simple protected route component
 const ProtectedRoute = ({ children, requireOnboarding = true }) => {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const user = useAuthStore((state) => state.user);
-
+  const { user, isAuthenticated, isLoading } = useAuthStore();
+  
+  if (isLoading) return <div className="min-h-screen bg-dark text-neonCyan flex items-center justify-center">Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" />;
   
-  if (!user) return <div className="min-h-screen bg-dark flex items-center justify-center"><div className="text-neonCyan animate-pulse">Loading Profile...</div></div>;
-
-  const needsOnboarding = user.academicProfile?.targetExam === 'General';
+  const needsOnboarding = user?.academicProfile?.targetExam === 'General';
 
   if (requireOnboarding && needsOnboarding) {
     return <Navigate to="/onboarding" />;
@@ -30,7 +29,7 @@ const ProtectedRoute = ({ children, requireOnboarding = true }) => {
     return <Navigate to="/" />;
   }
 
-  return children;
+  return <AppLayout>{children}</AppLayout>;
 };
 
 function App() {

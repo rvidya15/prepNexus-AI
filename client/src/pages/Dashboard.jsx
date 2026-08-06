@@ -31,7 +31,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark p-8">
+    <div className="p-8">
       {/* Header */}
       <header className="flex justify-between items-center mb-10">
         <div className="flex items-center gap-3">
@@ -40,7 +40,7 @@ const Dashboard = () => {
         </div>
         <div className="flex items-center gap-4">
           <div 
-            className="flex items-center gap-2 bg-darker px-4 py-2 rounded-full border border-neonCyan/30 cursor-pointer hover:bg-neonCyan/10 transition" 
+            className="flex items-center gap-2 dark:bg-darker bg-white px-4 py-2 rounded-full border dark:border-neonCyan/30 border-indigo-200 cursor-pointer hover:bg-opacity-80 transition shadow-sm" 
             title="Buy More Tokens"
             onClick={async () => {
               try {
@@ -53,7 +53,7 @@ const Dashboard = () => {
             <BrainCircuit className="text-neonCyan w-5 h-5" />
             <span className="text-neonCyan font-bold">{user?.aiTokens ?? 20} Tokens</span>
           </div>
-          <div className="flex items-center gap-2 bg-darker px-4 py-2 rounded-full border border-orange-500/30">
+          <div className="flex items-center gap-2 dark:bg-darker bg-white px-4 py-2 rounded-full border border-orange-500/30 shadow-sm">
             <Flame className="text-orange-500 w-5 h-5" />
             <span className="text-orange-500 font-bold">{streak} Day Streak!</span>
           </div>
@@ -74,8 +74,8 @@ const Dashboard = () => {
           <WeaknessRadarChart />
           <GamificationHub />
           
-          <div className="bg-darker p-6 rounded-xl border border-neonTeal/20 shadow-lg">
-            <h3 className="text-neonCyan font-semibold mb-4">Quick Actions</h3>
+          <div className="dark:bg-darker bg-white p-6 rounded-xl border dark:border-neonTeal/20 border-gray-200 shadow-lg">
+            <h3 className="dark:text-neonCyan text-indigo-700 font-semibold mb-4">Quick Actions</h3>
             <div className="space-y-3">
               <button 
                 onClick={() => navigate('/tutor')}
@@ -115,7 +115,7 @@ const Dashboard = () => {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:col-span-2 bg-darker p-8 rounded-xl shadow-xl border border-neonTeal/20"
+          className="lg:col-span-2 dark:bg-darker bg-white p-8 rounded-xl shadow-xl border dark:border-neonTeal/20 border-gray-200"
         >
           <div className="flex items-center gap-3 mb-6">
             <BookOpen className="text-neonCyan w-6 h-6" />
@@ -127,7 +127,7 @@ const Dashboard = () => {
               <motion.div 
                 whileHover={{ scale: 1.02 }}
                 key={task.id} 
-                className="bg-dark p-4 rounded-lg border-l-4 border-neonCyan flex justify-between items-center cursor-pointer shadow-md"
+                className="dark:bg-dark bg-gray-50 p-4 rounded-lg border-l-4 dark:border-neonCyan border-indigo-500 flex justify-between items-center cursor-pointer shadow-md"
               >
                 <div>
                   <span className="text-xs uppercase tracking-wider text-neonTeal font-bold">{task.type}</span>

@@ -44,7 +44,7 @@ const WeeklyQuiz = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark text-white p-8">
+    <div className="p-8 h-full">
       <div className="max-w-4xl mx-auto">
         <header className="flex items-center gap-4 mb-8">
           <ArrowLeft className="w-6 h-6 text-neonCyan cursor-pointer hover:text-neonTeal transition" onClick={() => navigate('/')} />

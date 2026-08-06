@@ -51,7 +51,7 @@ const RevisionSheet = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark p-8">
+    <div className="p-8 h-full">
       <header className="flex items-center gap-4 mb-8">
         <button onClick={() => navigate('/')} className="text-gray-400 hover:text-white transition">
           <ArrowLeft />

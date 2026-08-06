@@ -54,9 +54,9 @@ const Notes = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark flex text-white">
+    <div className="flex h-full">
       {/* Sidebar */}
-      <div className="w-1/3 bg-darker border-r border-gray-800 p-6 overflow-y-auto">
+      <div className="w-1/3 dark:bg-darker/50 bg-white/50 border-r dark:border-gray-800 border-gray-200 p-6 overflow-y-auto">
         <div className="flex items-center gap-3 mb-8 cursor-pointer" onClick={() => navigate('/')}>
           <ArrowLeft className="text-neonCyan w-5 h-5 hover:text-neonTeal transition" />
           <h2 className="text-xl font-bold flex items-center gap-2"><BookOpen className="text-neonCyan" /> My Notes</h2>
@@ -74,7 +74,7 @@ const Notes = () => {
             <div 
               key={note._id}
               onClick={() => { setActiveNote(note); setIsEditing(false); }}
-              className={`p-4 rounded-lg cursor-pointer border transition ${activeNote?._id === note._id ? 'bg-neonCyan/10 border-neonCyan' : 'bg-dark border-gray-800 hover:border-gray-600'}`}
+              className={`p-4 rounded-lg cursor-pointer border transition ${activeNote?._id === note._id ? 'dark:bg-neonCyan/10 bg-indigo-50 dark:border-neonCyan border-indigo-500' : 'dark:bg-dark bg-white dark:border-gray-800 border-gray-200 hover:border-gray-400'}`}
             >
               <h3 className="font-semibold truncate">{note.title}</h3>
               <p className="text-sm text-gray-500 truncate mt-1">{note.content}</p>
