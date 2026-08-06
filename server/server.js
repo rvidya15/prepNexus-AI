@@ -18,8 +18,7 @@ const app = express();
 // Middlewares
 app.use(helmet()); // Set security HTTP headers
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
-  credentials: true
+  origin: '*' // Allow all Vercel URLs to connect without CORS errors
 }));
 app.use(express.json());
 
