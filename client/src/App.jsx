@@ -9,6 +9,7 @@ import Onboarding from './pages/Onboarding';
 import Notes from './pages/Notes';
 import PYQBrowser from './pages/PYQBrowser';
 import WeeklyQuiz from './pages/WeeklyQuiz';
+import Landing from './pages/Landing';
 import { useAuthStore } from './store/useAuthStore';
 import AppLayout from './components/layout/AppLayout';
 
@@ -26,7 +27,7 @@ const ProtectedRoute = ({ children, requireOnboarding = true }) => {
   }
 
   if (!requireOnboarding && !needsOnboarding) {
-    return <Navigate to="/" />;
+    return <Navigate to="/dashboard" />;
   }
 
   return <AppLayout>{children}</AppLayout>;
@@ -48,8 +49,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* Protected Routes */}
+        <Route path="/" element={<Landing />} />
         <Route path="/onboarding" element={<ProtectedRoute requireOnboarding={false}><Onboarding /></ProtectedRoute>} />
-        <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/tutor" element={<ProtectedRoute><TutorSession /></ProtectedRoute>} />
         <Route path="/revision" element={<ProtectedRoute><RevisionSheet /></ProtectedRoute>} />
         <Route path="/notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />

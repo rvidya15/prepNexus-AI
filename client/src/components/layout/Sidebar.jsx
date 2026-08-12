@@ -12,7 +12,7 @@ const Sidebar = () => {
   const { theme, toggleTheme } = useThemeStore();
 
   const navItems = [
-    { name: 'Dashboard', path: '/', icon: <Home className="w-5 h-5" /> },
+    { name: 'Dashboard', path: '/dashboard', icon: <Home className="w-5 h-5" /> },
     { name: 'Smart Tutor', path: '/tutor', icon: <BrainCircuit className="w-5 h-5" /> },
     { name: 'Weekly Quiz', path: '/quiz', icon: <Trophy className="w-5 h-5" /> },
     { name: 'Revision', path: '/revision', icon: <Flame className="w-5 h-5" /> },

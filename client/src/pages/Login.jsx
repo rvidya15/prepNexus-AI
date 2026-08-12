@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     await login(email, password);
     if (localStorage.getItem('token')) {
-      navigate('/');
+      navigate('/dashboard');
     }
   };
 
