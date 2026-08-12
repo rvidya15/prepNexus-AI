@@ -8,7 +8,7 @@ const GamificationHub = () => {
   const xpProgress = (xp % 1000) / 10; // Percentage to next level (0-100)
 
   return (
-    <div className="bg-darker p-6 rounded-xl shadow-xl border border-yellow-500/20">
+    <div className="dark:bg-darker/80 bg-white/80 backdrop-blur-xl p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border dark:border-yellow-500/20 border-indigo-100 transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-yellow-500 font-bold flex items-center gap-2">
           <Trophy className="w-5 h-5" /> Player Stats
@@ -22,11 +22,11 @@ const GamificationHub = () => {
 
       <div className="mb-6">
         <div className="flex justify-between text-sm text-textLight mb-2">
-          <span className="font-semibold text-white">Level {level}</span>
+          <span className="font-semibold dark:text-white text-slate-800">Level {level}</span>
           <span>{xp} Total XP</span>
         </div>
         {/* Animated XP Bar */}
-        <div className="w-full bg-dark h-3 rounded-full overflow-hidden shadow-inner">
+        <div className="w-full dark:bg-dark bg-indigo-50 h-3 rounded-full overflow-hidden shadow-inner">
           <motion.div 
             initial={{ width: 0 }}
             animate={{ width: `${xpProgress}%` }}
@@ -41,7 +41,7 @@ const GamificationHub = () => {
         <h4 className="text-sm text-gray-400 mb-3 flex items-center gap-1"><Star className="w-4 h-4"/> Badges Earned</h4>
         <div className="flex flex-wrap gap-2">
           {badges.map((badge, idx) => (
-            <span key={idx} className="bg-dark text-yellow-500 text-xs px-3 py-2 rounded-lg border border-yellow-500/30 flex items-center gap-2">
+            <span key={idx} className="dark:bg-dark bg-indigo-50 text-yellow-600 dark:text-yellow-500 text-xs px-3 py-2 rounded-lg border dark:border-yellow-500/30 border-yellow-200 flex items-center gap-2 shadow-sm font-medium">
               <Zap className="w-3 h-3 text-yellow-500"/> {badge}
             </span>
           ))}

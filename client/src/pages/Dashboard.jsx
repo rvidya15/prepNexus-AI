@@ -74,8 +74,8 @@ const Dashboard = () => {
           <WeaknessRadarChart />
           <GamificationHub />
           
-          <div className="dark:bg-darker bg-white p-6 rounded-xl border dark:border-neonTeal/20 border-gray-200 shadow-lg">
-            <h3 className="dark:text-neonCyan text-indigo-700 font-semibold mb-4">Quick Actions</h3>
+          <div className="dark:bg-darker/80 bg-white/80 backdrop-blur-xl p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border dark:border-neonTeal/20 border-indigo-100 transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+            <h3 className="dark:text-neonCyan text-indigo-700 font-bold mb-4 tracking-tight">Quick Actions</h3>
             <div className="space-y-3">
               <button 
                 onClick={() => navigate('/tutor')}
@@ -115,7 +115,8 @@ const Dashboard = () => {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:col-span-2 dark:bg-darker bg-white p-8 rounded-xl shadow-xl border dark:border-neonTeal/20 border-gray-200"
+          transition={{ delay: 0.1 }}
+          className="lg:col-span-2 dark:bg-darker/80 bg-white/80 backdrop-blur-xl p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border dark:border-neonTeal/20 border-indigo-100 transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
         >
           <div className="flex items-center gap-3 mb-6">
             <BookOpen className="text-neonCyan w-6 h-6" />
