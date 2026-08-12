@@ -19,7 +19,7 @@ const FloatingTutor = () => {
     setIsLoading(true);
     
     try {
-      const api = (await import('../../api/axiosConfig')).default;
+      const api = (await import('../api/axiosConfig')).default;
       const res = await api.post('/ai/tutor', { query: userMsg });
       
       setMessages([...newMsgs, { 
