@@ -1,15 +1,13 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, BrainCircuit, BookOpen, Flame, Trophy, Moon, Sun, LogOut } from 'lucide-react';
+import { Home, BrainCircuit, BookOpen, Flame, Trophy, Clock, LogOut } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
-import { useThemeStore } from '../../store/useThemeStore';
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const logout = useAuthStore(state => state.logout);
   const user = useAuthStore(state => state.user);
-  const { theme, toggleTheme } = useThemeStore();
 
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: <Home className="w-5 h-5" /> },
