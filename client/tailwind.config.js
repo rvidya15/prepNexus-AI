@@ -8,14 +8,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        dark: '#0B0C10',
-        darker: '#1F2833',
-        lightBg: '#F8FAFC',
+        dark: '#1E1E2E', // Soft dark lavender/indigo for dark mode
+        darker: '#181825',
+        lightBg: '#F8F9FA', // Clean white/gray
         lightCard: '#FFFFFF',
-        neonCyan: '#66FCF1',
-        neonTeal: '#45A29E',
-        textLight: '#C5C6C7',
-        textDark: '#0F172A',
+        neonCyan: '#B4BEFE', // Soft Lavender/Periwinkle
+        neonTeal: '#CBA6F7', // Deep Lavender
+        textLight: '#CDD6F4',
+        textDark: '#4C4F69',
       }
     },
   },

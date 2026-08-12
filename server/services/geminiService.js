@@ -1,4 +1,5 @@
 const { GoogleGenAI } = require('@google/genai');
+const { YoutubeTranscript } = require('youtube-transcript');
 const { PYQ_ANALYZER_PROMPT, SMART_TUTOR_PROMPT } = require('../utils/prompts');
 
 // Ensure API key is present before initializing
@@ -25,8 +26,10 @@ const generateAdaptiveQuiz = async (topic, userLevel, previousPerformance) => {
   
   const prompt = `Create a 5-question multiple choice quiz on the topic of "${topic}". 
   The difficulty should be tailored for a student at the "${userLevel}" level.
-  Consider their previous performance: ${JSON.stringify(previousPerformance)}.
-  Output only valid JSON array of question objects.`;
+  CRITICAL: You MUST include at least 2 Previous Year Questions (PYQs) for this specific exam if applicable. 
+  For PYQs, include the year and exam name in the question text (e.g. "[UPSC 2019] What is...").
+  Include a "trendAnalysis" property in the output JSON array. Return an array of objects where the final object is just { "trendAnalysis": "Based on PYQs, this topic carries 15% weightage..." }.
+  Output only a valid JSON array of question objects (with options, answer, explanation), ending with the trendAnalysis object.`;
 
   try {
     const response = await ai.models.generateContent({
@@ -76,8 +79,25 @@ const handleTutorDoubt = async (userQuery, multimodalContext, explanationStyle) 
   console.log(`[AI Engine] Responding to doubt as AI Tutor (Style: ${explanationStyle})`);
   if (!ai) return "This is a simulated AI Tutor response because the GEMINI_API_KEY is not configured in the `.env` file.\n\nTo see real AI responses, please add your Google Gemini API key to `server/.env`!\n\n[ACTION_ITEM] {\"type\": \"reminder\", \"description\": \"Add API Key\", \"dueDate\": \"Today\"}";
   
+  // Extract YouTube URL if present
+  const ytRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?([a-zA-Z0-9_-]{11})/;
+  const ytMatch = userQuery.match(ytRegex);
+  let transcriptContext = '';
+  
+  if (ytMatch) {
+    try {
+      console.log(`[AI Engine] Detected YouTube URL. Fetching transcript for ${ytMatch[1]}...`);
+      const transcript = await YoutubeTranscript.fetchTranscript(ytMatch[1]);
+      const transcriptText = transcript.map(t => t.text).join(' ').substring(0, 5000); // Limit to 5k chars
+      transcriptContext = `\n\n[YouTube Video Transcript Excerpt]: ${transcriptText}\n\n`;
+    } catch (err) {
+      console.log(`[AI Engine] Failed to fetch YouTube transcript:`, err.message);
+      transcriptContext = `\n\n[Failed to load YouTube transcript. The video might not have captions.]\n\n`;
+    }
+  }
+
   const contextStr = multimodalContext ? `Context: ${JSON.stringify(multimodalContext)}\n` : '';
-  const prompt = `${contextStr}Student Query: ${userQuery}\nRequested Style: ${explanationStyle}`;
+  const prompt = `${contextStr}${transcriptContext}Student Query: ${userQuery}\nRequested Style: ${explanationStyle}`;
 
   try {
     const response = await ai.models.generateContent({

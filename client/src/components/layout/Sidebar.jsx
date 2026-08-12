@@ -26,7 +26,7 @@ const Sidebar = () => {
     >
       <div className="p-6 flex items-center gap-3">
         <BrainCircuit className={`w-8 h-8 ${theme === 'dark' ? 'text-neonCyan' : 'text-indigo-600'}`} />
-        <h1 className="text-2xl font-bold tracking-tight">PrepNexus</h1>
+        <h1 className="text-2xl font-bold tracking-tight">NexaPrep</h1>
       </div>
 
       <div className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">

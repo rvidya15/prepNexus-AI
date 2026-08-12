@@ -41,11 +41,13 @@ app.use('/api/workspaces', workspaceRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/stripe', stripeRoutes);
+const plannerRoutes = require('./routes/plannerRoutes');
+app.use('/api/planner', plannerRoutes);
 app.use('/api/notes', noteRoutes);
 
 // Health Check
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK', message: 'PrepNexus-AI API is running' });
+  res.status(200).json({ status: 'OK', message: 'NexaPrep API is running' });
 });
 
 const PORT = process.env.PORT || 5000;

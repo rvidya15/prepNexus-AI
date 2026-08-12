@@ -9,7 +9,7 @@ import { useGamificationStore } from '../store/useGamificationStore';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-  const { streak, dailyPlanner, fetchDashboardData } = useStudyStore();
+  const { streak, fetchDashboardData } = useStudyStore();
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const syncWithProfile = useGamificationStore((state) => state.syncWithProfile);
@@ -36,7 +36,7 @@ const Dashboard = () => {
       <header className="flex justify-between items-center mb-10">
         <div className="flex items-center gap-3">
           <BrainCircuit className="text-neonCyan w-8 h-8" />
-          <h1 className="text-3xl font-bold text-white">PrepNexus-AI</h1>
+          <h1 className="text-3xl font-bold dark:text-white text-gray-900">NexaPrep</h1>
         </div>
         <div className="flex items-center gap-4">
           <div 
@@ -119,23 +119,46 @@ const Dashboard = () => {
         >
           <div className="flex items-center gap-3 mb-6">
             <BookOpen className="text-neonCyan w-6 h-6" />
-            <h2 className="text-2xl font-semibold text-white">AI Daily Planner</h2>
+            <h2 className="text-2xl font-bold dark:text-white text-gray-900">Spaced Repetition Schedule</h2>
           </div>
           
           <div className="space-y-4">
-            {dailyPlanner.map((task) => (
-              <motion.div 
-                whileHover={{ scale: 1.02 }}
-                key={task.id} 
-                className="dark:bg-dark bg-gray-50 p-4 rounded-lg border-l-4 dark:border-neonCyan border-indigo-500 flex justify-between items-center cursor-pointer shadow-md"
-              >
-                <div>
-                  <span className="text-xs uppercase tracking-wider text-neonTeal font-bold">{task.type}</span>
-                  <h4 className="text-lg text-white mt-1">{task.title}</h4>
-                </div>
-                <span className="text-gray-400 bg-gray-800 px-3 py-1 rounded-full text-sm">{task.time}</span>
-              </motion.div>
-            ))}
+            {user?.srsTopics?.length > 0 ? (
+              user.srsTopics.slice().sort((a,b) => new Date(a.nextRevisionDate) - new Date(b.nextRevisionDate)).map((task, idx) => {
+                const isDue = new Date(task.nextRevisionDate) <= new Date();
+                return (
+                  <motion.div 
+                    whileHover={{ scale: 1.02 }}
+                    key={idx} 
+                    className={`p-4 rounded-lg border-l-4 flex justify-between items-center shadow-md ${isDue ? 'dark:bg-dark bg-red-50 dark:border-red-500 border-red-500' : 'dark:bg-dark bg-gray-50 dark:border-neonCyan border-indigo-500'}`}
+                  >
+                    <div>
+                      <span className={`text-xs uppercase tracking-wider font-bold ${isDue ? 'text-red-500' : 'text-neonTeal'}`}>
+                        {isDue ? 'DUE TODAY' : 'UPCOMING'}
+                      </span>
+                      <h4 className="font-semibold dark:text-white text-gray-800 text-lg">{task.topicName}</h4>
+                      <p className="text-xs text-gray-500">Next Review: {new Date(task.nextRevisionDate).toLocaleDateString()}</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      {isDue && (
+                        <button 
+                          onClick={() => {
+                            alert("To complete this review, chat with the NexaPrep Guide!");
+                          }}
+                          className="px-4 py-2 rounded-lg bg-red-500 text-white font-bold hover:bg-red-600 transition text-sm"
+                        >
+                          Review Now
+                        </button>
+                      )}
+                    </div>
+                  </motion.div>
+                )
+              })
+            ) : (
+              <div className="text-center p-8 text-gray-500 border border-dashed border-gray-400 rounded-lg">
+                No topics scheduled for revision. Ask the NexaPrep Guide to schedule a revision for you!
+              </div>
+            )}
           </div>
         </motion.div>
 

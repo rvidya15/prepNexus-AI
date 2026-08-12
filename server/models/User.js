@@ -18,8 +18,22 @@ const userSchema = new mongoose.Schema({
   },
 
   // Monetization & AI Credits
-  subscriptionPlan: { type: String, enum: ['free', 'pro'], default: 'free' },
-  aiTokens: { type: Number, default: 20 },
+  aiTokens: {
+    type: Number,
+    default: 20
+  },
+  subscriptionPlan: {
+    type: String,
+    enum: ['free', 'pro'],
+    default: 'free'
+  },
+  srsTopics: [{
+    topicName: String,
+    nextRevisionDate: Date,
+    interval: { type: Number, default: 0 },
+    repetition: { type: Number, default: 0 },
+    easeFactor: { type: Number, default: 2.5 }
+  }],
 
   // Gamification & Habits
   gamification: {

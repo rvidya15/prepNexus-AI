@@ -27,7 +27,7 @@ const Login = () => {
       >
         <div className="flex flex-col items-center mb-8">
           <BrainCircuit className="text-neonCyan w-12 h-12 mb-2" />
-          <h2 className="text-3xl font-bold text-white">PrepNexus-AI</h2>
+          <h1 className="text-4xl font-bold text-center text-white mb-2">Welcome to NexaPrep</h1>
           <p className="text-gray-400 mt-2">Welcome back to your study hub.</p>
         </div>
 

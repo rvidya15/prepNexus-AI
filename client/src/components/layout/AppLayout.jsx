@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useThemeStore } from '../../store/useThemeStore';
 import Sidebar from './Sidebar';
 import Background from './Background';
+import FloatingTutor from '../FloatingTutor';
 
 const AppLayout = ({ children }) => {
   const { theme } = useThemeStore();
@@ -23,6 +24,7 @@ const AppLayout = ({ children }) => {
       <main className="flex-1 overflow-y-auto z-10 relative">
         {children}
       </main>
+      <FloatingTutor />
     </div>
   );
 };

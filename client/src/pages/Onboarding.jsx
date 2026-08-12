@@ -56,7 +56,7 @@ const Onboarding = () => {
       >
         <div className="flex flex-col items-center mb-8">
           <BrainCircuit className="text-neonCyan w-12 h-12 mb-2" />
-          <h2 className="text-3xl font-bold text-white">Welcome to PrepNexus-AI</h2>
+          <h2 className="text-4xl font-bold text-center mb-8"><span className="text-neonCyan">NexaPrep</span> Protocol Initiated</h2>
           <p className="text-gray-400 mt-2 text-center">Let's tailor your AI tutor to your specific goals.</p>
         </div>
 
