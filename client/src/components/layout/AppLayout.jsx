@@ -18,7 +18,7 @@ const AppLayout = ({ children }) => {
   }, [theme]);
 
   return (
-    <div className={`flex h-screen overflow-hidden ${theme === 'dark' ? 'text-white' : 'text-textDark'}`}>
+    <div className={`flex h-screen overflow-hidden text-slate-800`}>
       <Background />
       <Sidebar />
       <main className="flex-1 overflow-y-auto z-10 relative">
