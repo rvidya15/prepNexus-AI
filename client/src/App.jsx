@@ -18,10 +18,10 @@ import AppLayout from './components/layout/AppLayout';
 const ProtectedRoute = ({ children, requireOnboarding = true }) => {
   const { user, isAuthenticated, isLoading } = useAuthStore();
   
-  if (isLoading) return <div className="min-h-screen bg-dark text-neonCyan flex items-center justify-center">Loading...</div>;
+  if (isLoading) return <div className="min-h-screen bg-slate-50 text-indigo-600 flex items-center justify-center font-bold">Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" />;
   
-  const needsOnboarding = user?.academicProfile?.targetExam === 'General';
+  const needsOnboarding = !user?.academicProfile?.targetExam || user?.academicProfile?.targetExam === 'General';
 
   if (requireOnboarding && needsOnboarding) {
     return <Navigate to="/onboarding" />;

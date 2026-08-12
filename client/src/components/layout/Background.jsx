@@ -1,12 +1,9 @@
 import React from 'react';
-import { useThemeStore } from '../../store/useThemeStore';
 import { motion } from 'framer-motion';
 
 const Background = () => {
-  const { theme } = useThemeStore();
-
   return (
-    <div className={`fixed inset-0 z-[-1] transition-colors duration-700 ${theme === 'dark' ? 'bg-[#0B0C10]' : 'bg-[#F8FAFC]'}`}>
+    <div className="fixed inset-0 z-[-1] bg-[#F8FAFC]">
       {/* Animated Glowing Orbs */}
       <motion.div 
         animate={{ 
@@ -15,7 +12,7 @@ const Background = () => {
           y: [0, -50, 0]
         }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className={`absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full blur-[120px] opacity-30 ${theme === 'dark' ? 'bg-neonCyan/30' : 'bg-blue-400/40'}`}
+        className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full blur-[120px] opacity-30 bg-blue-400/40"
       />
       <motion.div 
         animate={{ 
@@ -24,7 +21,7 @@ const Background = () => {
           y: [0, 50, 0]
         }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        className={`absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full blur-[150px] opacity-20 ${theme === 'dark' ? 'bg-neonTeal/30' : 'bg-indigo-400/30'}`}
+        className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full blur-[150px] opacity-20 bg-indigo-400/30"
       />
       
       {/* Mesh Overlay for Texture */}

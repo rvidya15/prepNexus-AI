@@ -73,42 +73,6 @@ const Dashboard = () => {
         >
           <WeaknessRadarChart />
           <GamificationHub />
-          
-          <div className="bg-white/80 backdrop-blur-xl p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-indigo-100 transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
-            <h3 className="text-indigo-700 font-bold mb-4 tracking-tight">Quick Actions</h3>
-            <div className="space-y-3">
-              <button 
-                onClick={() => navigate('/tutor')}
-                className="w-full bg-neonTeal/10 hover:bg-neonTeal/20 text-neonCyan border border-neonCyan transition-all py-3 rounded-lg flex justify-center items-center gap-2 shadow-[0_0_15px_rgba(102,252,241,0.2)] hover:shadow-[0_0_25px_rgba(102,252,241,0.4)]"
-              >
-                <BrainCircuit className="w-5 h-5" /> Ask Smart Tutor
-              </button>
-              <button 
-                onClick={() => navigate('/revision')}
-                className="w-full bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 border border-orange-500 transition-all py-3 rounded-lg flex justify-center items-center gap-2"
-              >
-                <BookOpen className="w-5 h-5" /> Visual Revision Sheets
-              </button>
-              <button 
-                onClick={() => navigate('/quiz')}
-                className="w-full bg-yellow-400/10 hover:bg-yellow-400/20 text-yellow-400 border border-yellow-400 transition-all py-3 rounded-lg flex justify-center items-center gap-2"
-              >
-                <Flame className="w-5 h-5" /> Weekly Quiz
-              </button>
-              <button 
-                onClick={() => navigate('/notes')}
-                className="w-full bg-green-500/10 hover:bg-green-500/20 text-green-500 border border-green-500 transition-all py-3 rounded-lg flex justify-center items-center gap-2"
-              >
-                <BookOpen className="w-5 h-5" /> My Notes
-              </button>
-              <button 
-                onClick={() => navigate('/pyqs')}
-                className="w-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-500 border border-purple-500 transition-all py-3 rounded-lg flex justify-center items-center gap-2"
-              >
-                <BrainCircuit className="w-5 h-5" /> PYQ Analyzer
-              </button>
-            </div>
-          </div>
         </motion.div>
 
         {/* Right Col: AI Daily Planner */}
