@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { BrainCircuit, BookOpen, Clock, PlayCircle, Sparkles, TrendingUp } from 'lucide-react';
+import { BrainCircuit, BookOpen, Clock, PlayCircle, Sparkles, TrendingUp, Trophy, Radar, FileText } from 'lucide-react';
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -26,6 +26,16 @@ const Landing = () => {
       title: "YouTube AI Integration",
       description: "Paste a lecture URL. Our AI instantly reads the transcript and answers any questions you have about the video.",
       icon: <PlayCircle className="w-8 h-8 text-red-500" />
+    },
+    {
+      title: "Gamification Hub",
+      description: "Earn XP, maintain daily streaks, and unlock badges. Learning is no longer a chore—it's a game.",
+      icon: <Trophy className="w-8 h-8 text-yellow-500" />
+    },
+    {
+      title: "Weakness Radar",
+      description: "Our analytics instantly identify your weak subjects and dynamically adjust your daily planner to fix them.",
+      icon: <Radar className="w-8 h-8 text-purple-500" />
     }
   ];
 
@@ -95,7 +105,7 @@ const Landing = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, idx) => (
               <motion.div
                 key={idx}
