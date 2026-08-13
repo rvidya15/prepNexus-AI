@@ -10,8 +10,8 @@ if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'your_gemini_ap
 
 /**
  * Dual Model Strategy:
- * 1. gemini-2.0-flash: Used for rapid responses, conversational tutor AI.
- * 2. gemini-2.0-flash: Used for deep reasoning, PYQ pattern analysis, and complex syllabus breakdowns.
+ * 1. gemini-3.5-flash: Used for rapid responses, conversational tutor AI.
+ * 2. gemini-3.5-flash: Used for deep reasoning, PYQ pattern analysis, and complex syllabus breakdowns.
  */
 
 // --- Core AI Functions ---
@@ -33,7 +33,7 @@ const generateAdaptiveQuiz = async (topic, userLevel, previousPerformance) => {
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-3.5-flash',
       contents: prompt
     });
     // Remove markdown formatting from the output if necessary before parsing
@@ -57,7 +57,7 @@ const analyzePYQTrend = async (questionText, examMetadata) => {
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-3.5-flash',
       config: {
         systemInstruction: PYQ_ANALYZER_PROMPT,
       },
@@ -101,7 +101,7 @@ const handleTutorDoubt = async (userQuery, multimodalContext, explanationStyle) 
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-3.5-flash',
       config: {
         systemInstruction: SMART_TUTOR_PROMPT,
       },
@@ -133,7 +133,7 @@ const generateRevisionSheet = async (topic, userLevel) => {
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-3.5-flash',
       contents: prompt
     });
     const cleanJson = response.text.replace(/```json/g, '').replace(/```/g, '').trim();
