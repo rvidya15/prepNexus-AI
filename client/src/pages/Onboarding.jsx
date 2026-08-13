@@ -163,7 +163,7 @@ const Onboarding = () => {
           <button 
             type="submit" 
             disabled={isLoading}
-            className="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl hover:bg-indigo-700 transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)] disabled:opacity-50 mt-4 text-lg"
+            className="w-full bg-indigo-600 text-slate-800 font-bold py-4 rounded-xl hover:bg-indigo-700 transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)] disabled:opacity-50 mt-4 text-lg"
           >
             {isLoading ? 'Personalizing AI...' : 'Enter Dashboard'}
           </button>

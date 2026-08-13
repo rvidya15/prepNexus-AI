@@ -56,15 +56,15 @@ const Notes = () => {
   return (
     <div className="flex h-full">
       {/* Sidebar */}
-      <div className="w-1/3 dark:bg-darker/50 bg-white/50 border-r dark:border-gray-800 border-gray-200 p-6 overflow-y-auto">
+      <div className="w-1/3  bg-white/50 border-r  border-gray-200 p-6 overflow-y-auto">
         <div className="flex items-center gap-3 mb-8 cursor-pointer" onClick={() => navigate('/')}>
-          <ArrowLeft className="text-neonCyan w-5 h-5 hover:text-neonTeal transition" />
-          <h2 className="text-xl font-bold flex items-center gap-2"><BookOpen className="text-neonCyan" /> My Notes</h2>
+          <ArrowLeft className="text-indigo-600 w-5 h-5 hover:text-indigo-500 transition" />
+          <h2 className="text-xl font-bold flex items-center gap-2"><BookOpen className="text-indigo-600" /> My Notes</h2>
         </div>
         
         <button 
           onClick={() => { setIsEditing(true); setActiveNote(null); setFormData({ title: '', content: '', tags: '' }) }}
-          className="w-full bg-neonCyan/10 text-neonCyan border border-neonCyan/30 rounded-lg py-3 flex items-center justify-center gap-2 mb-6 hover:bg-neonCyan/20 transition"
+          className="w-full bg-neonCyan/10 text-indigo-600 border border-neonCyan/30 rounded-lg py-3 flex items-center justify-center gap-2 mb-6 hover:bg-neonCyan/20 transition"
         >
           <Plus className="w-5 h-5" /> New Note
         </button>
@@ -74,7 +74,7 @@ const Notes = () => {
             <div 
               key={note._id}
               onClick={() => { setActiveNote(note); setIsEditing(false); }}
-              className={`p-4 rounded-lg cursor-pointer border transition ${activeNote?._id === note._id ? 'dark:bg-neonCyan/10 bg-indigo-50 dark:border-neonCyan border-indigo-500' : 'dark:bg-dark bg-white dark:border-gray-800 border-gray-200 hover:border-gray-400'}`}
+              className={`p-4 rounded-lg cursor-pointer border transition ${activeNote?._id === note._id ? ' bg-indigo-50  border-indigo-500' : ' bg-white  border-gray-200 hover:border-gray-400'}`}
             >
               <h3 className="font-semibold truncate">{note.title}</h3>
               <p className="text-sm text-gray-500 truncate mt-1">{note.content}</p>
@@ -92,14 +92,14 @@ const Notes = () => {
               placeholder="Note Title..."
               value={formData.title}
               onChange={(e) => setFormData({...formData, title: e.target.value})}
-              className="w-full bg-transparent text-3xl font-bold border-b border-gray-700 pb-2 focus:outline-none focus:border-neonCyan"
+              className="w-full bg-transparent text-3xl font-bold border-b border-indigo-200 pb-2 focus:outline-none focus:border-neonCyan"
             />
             <input 
               type="text" 
               placeholder="Tags (comma separated)..."
               value={formData.tags}
               onChange={(e) => setFormData({...formData, tags: e.target.value})}
-              className="w-full bg-transparent text-sm text-neonTeal border-b border-gray-800 pb-2 focus:outline-none focus:border-neonTeal"
+              className="w-full bg-transparent text-sm text-indigo-500 border-b border-indigo-100 pb-2 focus:outline-none focus:border-neonTeal"
             />
             <textarea 
               rows="20"
@@ -118,11 +118,11 @@ const Notes = () => {
           </motion.div>
         ) : activeNote ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-3xl">
-            <div className="flex justify-between items-start mb-6 border-b border-gray-800 pb-4">
+            <div className="flex justify-between items-start mb-6 border-b border-indigo-100 pb-4">
               <div>
                 <h1 className="text-3xl font-bold">{activeNote.title}</h1>
                 <div className="flex gap-2 mt-2">
-                  {activeNote.tags?.map(t => <span key={t} className="text-xs bg-darker text-neonTeal px-2 py-1 rounded border border-neonTeal/30">#{t}</span>)}
+                  {activeNote.tags?.map(t => <span key={t} className="text-xs bg-white text-indigo-500 px-2 py-1 rounded border border-neonTeal/30">#{t}</span>)}
                 </div>
               </div>
               <button onClick={() => handleDelete(activeNote._id)} className="text-red-500 hover:bg-red-500/10 p-2 rounded transition">

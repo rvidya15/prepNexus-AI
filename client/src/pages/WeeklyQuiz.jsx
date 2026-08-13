@@ -47,20 +47,20 @@ const WeeklyQuiz = () => {
     <div className="p-8 h-full">
       <div className="max-w-4xl mx-auto">
         <header className="flex items-center gap-4 mb-8">
-          <ArrowLeft className="w-6 h-6 text-neonCyan cursor-pointer hover:text-neonTeal transition" onClick={() => navigate('/')} />
+          <ArrowLeft className="w-6 h-6 text-indigo-600 cursor-pointer hover:text-indigo-500 transition" onClick={() => navigate('/')} />
           <h1 className="text-3xl font-bold flex items-center gap-3"><Trophy className="text-yellow-400" /> Weekly AI Quiz</h1>
         </header>
 
         {!quizData ? (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-darker p-8 rounded-xl border border-gray-800 text-center">
-            <Target className="w-16 h-16 text-neonCyan mx-auto mb-4" />
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white p-8 rounded-xl border border-indigo-100 text-center">
+            <Target className="w-16 h-16 text-indigo-600 mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-4">Generate Your Quiz</h2>
             <p className="text-gray-400 mb-6 max-w-lg mx-auto">Enter a topic you studied this week. The AI will instantly generate a tailored 5-question multiple choice quiz based on your profile.</p>
             
             <div className="flex gap-4 max-w-md mx-auto">
               <input 
                 type="text" placeholder="e.g., Thermodynamics, World War 2" value={topic} onChange={(e) => setTopic(e.target.value)}
-                className="flex-1 bg-dark border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-neonCyan transition"
+                className="flex-1 bg-slate-50 border border-indigo-200 rounded-lg px-4 py-3 focus:outline-none focus:border-neonCyan transition"
               />
               <button 
                 onClick={handleGenerate} disabled={isLoading}
@@ -72,11 +72,11 @@ const WeeklyQuiz = () => {
             {error && <p className="text-red-500 mt-4">{error}</p>}
           </motion.div>
         ) : (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-darker p-8 rounded-xl border border-gray-800">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-8 rounded-xl border border-indigo-100">
             {!isSubmitted ? (
               <>
                 <div className="flex justify-between items-center mb-8">
-                  <span className="text-neonCyan font-bold">Question {currentQIndex + 1} of {quizData.length}</span>
+                  <span className="text-indigo-600 font-bold">Question {currentQIndex + 1} of {quizData.length}</span>
                   <div className="flex gap-2">
                     {quizData.map((_, i) => (
                       <div key={i} className={`w-3 h-3 rounded-full ${i === currentQIndex ? 'bg-neonCyan' : selectedAnswers[i] ? 'bg-neonTeal/50' : 'bg-gray-700'}`} />
@@ -90,7 +90,7 @@ const WeeklyQuiz = () => {
                   {quizData[currentQIndex].options.map((opt, i) => (
                     <div 
                       key={i} onClick={() => handleSelect(opt)}
-                      className={`p-4 rounded-lg cursor-pointer border transition ${selectedAnswers[currentQIndex] === opt ? 'bg-neonCyan/10 border-neonCyan' : 'bg-dark border-gray-700 hover:border-gray-500'}`}
+                      className={`p-4 rounded-lg cursor-pointer border transition ${selectedAnswers[currentQIndex] === opt ? 'bg-neonCyan/10 border-neonCyan' : 'bg-slate-50 border-indigo-200 hover:border-gray-500'}`}
                     >
                       {opt}
                     </div>
@@ -115,7 +115,7 @@ const WeeklyQuiz = () => {
                   ) : (
                     <button 
                       onClick={() => setCurrentQIndex(prev => prev + 1)}
-                      className="bg-gray-700 text-white font-bold px-6 py-2 rounded-lg"
+                      className="bg-gray-700 text-slate-800 font-bold px-6 py-2 rounded-lg"
                     >
                       Next
                     </button>
@@ -126,7 +126,7 @@ const WeeklyQuiz = () => {
               <div className="text-center">
                 <Trophy className="w-20 h-20 text-yellow-400 mx-auto mb-4" />
                 <h2 className="text-3xl font-bold mb-2">Quiz Completed!</h2>
-                <p className="text-xl mb-8">You scored <span className="text-neonCyan font-bold">{calculateScore()}</span> out of {quizData.length}</p>
+                <p className="text-xl mb-8">You scored <span className="text-indigo-600 font-bold">{calculateScore()}</span> out of {quizData.length}</p>
                 
                 <div className="space-y-6 text-left max-w-2xl mx-auto">
                   {quizData.map((q, i) => {
@@ -139,7 +139,7 @@ const WeeklyQuiz = () => {
                           {isCorrect ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <XCircle className="w-4 h-4 text-red-500" />}
                         </p>
                         {!isCorrect && <p className="text-sm text-green-400 mb-2">Correct Answer: {q.answer}</p>}
-                        <p className="text-xs text-gray-400 bg-dark p-2 rounded">{q.explanation}</p>
+                        <p className="text-xs text-gray-400 bg-slate-50 p-2 rounded">{q.explanation}</p>
                       </div>
                     )
                   })}

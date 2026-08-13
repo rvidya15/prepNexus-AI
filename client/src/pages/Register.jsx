@@ -81,7 +81,7 @@ const Register = () => {
           <button 
             type="submit" 
             disabled={isLoading}
-            className="w-full bg-indigo-600 text-white py-3.5 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)] flex justify-center items-center gap-2 mt-4"
+            className="w-full bg-indigo-600 text-slate-800 py-3.5 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)] flex justify-center items-center gap-2 mt-4"
           >
             {isLoading ? 'Creating Account...' : <><UserPlus className="w-5 h-5" /> Sign Up</>}
           </button>

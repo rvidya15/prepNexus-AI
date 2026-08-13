@@ -53,11 +53,11 @@ const RevisionSheet = () => {
   return (
     <div className="p-8 h-full">
       <header className="flex items-center gap-4 mb-8">
-        <button onClick={() => navigate('/')} className="text-gray-400 hover:text-white transition">
+        <button onClick={() => navigate('/')} className="text-gray-400 hover:text-slate-800 transition">
           <ArrowLeft />
         </button>
-        <h1 className="text-3xl font-bold text-white">Visual Revision Sheet</h1>
-        <span className="bg-neonCyan/20 text-neonCyan px-4 py-1 rounded-full text-sm border border-neonCyan/30">
+        <h1 className="text-3xl font-bold text-slate-800">Visual Revision Sheet</h1>
+        <span className="bg-neonCyan/20 text-indigo-600 px-4 py-1 rounded-full text-sm border border-neonCyan/30">
           {sheetData.topic}
         </span>
       </header>
@@ -68,7 +68,7 @@ const RevisionSheet = () => {
           placeholder="Enter a new topic to generate (e.g., Photosynthesis)"
           value={topicInput}
           onChange={e => setTopicInput(e.target.value)}
-          className="flex-1 bg-darker border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-neonCyan focus:outline-none"
+          className="flex-1 bg-white border border-indigo-200 rounded-lg px-4 py-2 text-slate-800 focus:border-neonCyan focus:outline-none"
         />
         <button 
           onClick={handleGenerate} 
@@ -85,14 +85,14 @@ const RevisionSheet = () => {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-darker p-6 rounded-xl border border-gray-700 shadow-xl"
+          className="bg-white p-6 rounded-xl border border-indigo-200 shadow-xl"
         >
-          <h3 className="text-white font-semibold flex items-center gap-2 mb-4">
-            <Map className="text-neonTeal w-5 h-5"/> Concept Mind Map
+          <h3 className="text-slate-800 font-semibold flex items-center gap-2 mb-4">
+            <Map className="text-indigo-500 w-5 h-5"/> Concept Mind Map
           </h3>
-          <div className="bg-dark p-4 rounded-lg overflow-x-auto shadow-inner min-h-[300px] flex items-center justify-center">
+          <div className="bg-slate-50 p-4 rounded-lg overflow-x-auto shadow-inner min-h-[300px] flex items-center justify-center">
             {isGenerating ? (
-              <div className="text-neonCyan animate-pulse">Drawing neural pathways...</div>
+              <div className="text-indigo-600 animate-pulse">Drawing neural pathways...</div>
             ) : (
               <div className="mermaid text-center" key={sheetData.mermaidSyntax}>
                 {sheetData.mermaidSyntax}
@@ -106,9 +106,9 @@ const RevisionSheet = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-darker p-6 rounded-xl border border-gray-700 shadow-xl flex flex-col"
+          className="bg-white p-6 rounded-xl border border-indigo-200 shadow-xl flex flex-col"
         >
-          <h3 className="text-white font-semibold flex items-center gap-2 mb-4">
+          <h3 className="text-slate-800 font-semibold flex items-center gap-2 mb-4">
             <Repeat className="text-orange-500 w-5 h-5"/> Active Recall Flashcard
           </h3>
           
@@ -124,17 +124,17 @@ const RevisionSheet = () => {
               style={{ transformStyle: 'preserve-3d' }}
             >
               <div 
-                className="absolute inset-0 w-full h-full bg-dark border-2 border-neonTeal/30 rounded-xl flex items-center justify-center p-8 text-center backface-hidden shadow-[0_0_20px_rgba(69,162,158,0.1)]"
+                className="absolute inset-0 w-full h-full bg-slate-50 border-2 border-neonTeal/30 rounded-xl flex items-center justify-center p-8 text-center backface-hidden shadow-[0_0_20px_rgba(69,162,158,0.1)]"
                 style={{ backfaceVisibility: 'hidden' }}
               >
-                <h2 className="text-2xl text-white font-semibold">{sheetData?.flashcard?.question || "Question not available."}</h2>
+                <h2 className="text-2xl text-slate-800 font-semibold">{sheetData?.flashcard?.question || "Question not available."}</h2>
               </div>
 
               <div 
                 className="absolute inset-0 w-full h-full bg-neonTeal/10 border-2 border-neonTeal rounded-xl flex items-center justify-center p-8 text-center backface-hidden shadow-[0_0_30px_rgba(69,162,158,0.3)]"
                 style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
               >
-                <div className="text-white text-lg">
+                <div className="text-slate-800 text-lg">
                   <p>{sheetData?.flashcard?.answer || "Please try regenerating the sheet."}</p>
                 </div>
               </div>

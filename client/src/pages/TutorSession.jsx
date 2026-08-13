@@ -43,15 +43,15 @@ const TutorSession = () => {
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-3xl h-[85vh] dark:bg-darker/90 bg-white/90 backdrop-blur-xl border dark:border-neonTeal/30 border-indigo-200 rounded-2xl shadow-xl flex flex-col overflow-hidden"
+        className="w-full max-w-3xl h-[85vh]  bg-white/90 backdrop-blur-xl border  border-indigo-200 rounded-2xl shadow-xl flex flex-col overflow-hidden"
       >
         {/* Header */}
-        <div className="p-4 border-b dark:border-neonTeal/20 border-indigo-100 flex items-center gap-4 dark:bg-darker/50 bg-indigo-50/50">
-          <button onClick={() => navigate('/')} className="text-gray-400 hover:text-white transition">
+        <div className="p-4 border-b  border-indigo-100 flex items-center gap-4  bg-indigo-50/50">
+          <button onClick={() => navigate('/')} className="text-gray-400 hover:text-slate-800 transition">
             <ArrowLeft />
           </button>
-          <Bot className="text-neonCyan w-6 h-6" />
-          <h2 className="text-lg text-white font-semibold">Smart Doubt Solver</h2>
+          <Bot className="text-indigo-600 w-6 h-6" />
+          <h2 className="text-lg text-slate-800 font-semibold">Smart Doubt Solver</h2>
         </div>
 
         {/* Chat Area */}
@@ -63,10 +63,10 @@ const TutorSession = () => {
               animate={{ opacity: 1, y: 0 }}
               className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
             >
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-lg ${msg.role === 'user' ? 'dark:bg-neonTeal bg-indigo-500' : 'dark:bg-neonCyan/20 bg-indigo-100'}`}>
-                {msg.role === 'user' ? <User className="w-5 h-5 dark:text-dark text-white" /> : <Bot className="w-5 h-5 dark:text-neonCyan text-indigo-600" />}
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-lg ${msg.role === 'user' ? ' bg-indigo-500' : ' bg-indigo-100'}`}>
+                {msg.role === 'user' ? <User className="w-5 h-5  text-slate-800" /> : <Bot className="w-5 h-5  text-indigo-600" />}
               </div>
-              <div className={`max-w-[70%] p-4 rounded-2xl shadow-md ${msg.role === 'user' ? 'dark:bg-neonTeal bg-indigo-500 dark:text-dark text-white rounded-tr-none' : 'dark:bg-dark bg-gray-50 border dark:border-neonTeal/30 border-gray-200 text-inherit rounded-tl-none'}`}>
+              <div className={`max-w-[70%] p-4 rounded-2xl shadow-md ${msg.role === 'user' ? ' bg-indigo-500  text-slate-800 rounded-tr-none' : ' bg-gray-50 border  border-gray-200 text-inherit rounded-tl-none'}`}>
                 <p className="whitespace-pre-wrap">{typeof msg.content === 'string' ? msg.content.replace(/\[ACTION_ITEM\].*/g, '') : (msg.content ? JSON.stringify(msg.content) : "No content")}</p>
                 
                 {/* Parse Action Item if present */}
@@ -74,10 +74,10 @@ const TutorSession = () => {
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="mt-4 p-3 bg-darker rounded-lg border border-orange-500/50 flex flex-col gap-1 shadow-[0_0_10px_rgba(249,115,22,0.1)]"
+                    className="mt-4 p-3 bg-white rounded-lg border border-orange-500/50 flex flex-col gap-1 shadow-[0_0_10px_rgba(249,115,22,0.1)]"
                   >
                     <span className="text-orange-500 text-[10px] font-bold tracking-wider">⚡ AUTOMATED ACTION QUEUED</span>
-                    <span className="text-sm text-white">Reminder set for tomorrow.</span>
+                    <span className="text-sm text-slate-800">Reminder set for tomorrow.</span>
                   </motion.div>
                 )}
               </div>
@@ -87,13 +87,13 @@ const TutorSession = () => {
 
         {/* Loading Indicator */}
         {isLoading && (
-          <div className="p-4 text-neonCyan text-sm animate-pulse flex items-center justify-center">
+          <div className="p-4 text-indigo-600 text-sm animate-pulse flex items-center justify-center">
             AI Tutor is analyzing your query...
           </div>
         )}
 
         {/* Input Area */}
-        <div className="p-4 dark:bg-darker bg-white border-t dark:border-neonTeal/20 border-indigo-100">
+        <div className="p-4  bg-white border-t  border-indigo-100">
           <div className="flex gap-2">
             <input 
               type="text" 
@@ -101,7 +101,7 @@ const TutorSession = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Ask the AI Tutor anything..." 
-              className="flex-1 dark:bg-dark bg-gray-50 border dark:border-gray-700 border-gray-300 rounded-xl px-4 py-3 focus:outline-none dark:focus:border-neonCyan focus:border-indigo-500 transition"
+              className="flex-1  bg-gray-50 border  border-gray-300 rounded-xl px-4 py-3 focus:outline-none  focus:border-indigo-500 transition"
             />
             <button 
               onClick={handleSend}

@@ -15,7 +15,7 @@ const Landing = () => {
     {
       title: "Spaced Repetition System",
       description: "Powered by the SuperMemo-2 algorithm. We automatically schedule your revisions so you never forget a topic.",
-      icon: <Clock className="w-8 h-8 text-neonTeal" />
+      icon: <Clock className="w-8 h-8 text-indigo-500" />
     },
     {
       title: "PYQ Trend Analyzer",
@@ -51,7 +51,7 @@ const Landing = () => {
           </div>
           <button 
             onClick={() => navigate('/login')}
-            className="px-6 py-2.5 rounded-full font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all"
+            className="px-6 py-2.5 rounded-full font-bold text-slate-800 bg-indigo-600 hover:bg-indigo-700 shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all"
           >
             Log In
           </button>
@@ -86,7 +86,7 @@ const Landing = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button 
                 onClick={() => navigate('/login')}
-                className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-lg text-white bg-indigo-600 hover:bg-indigo-700 shadow-[0_10px_40px_rgba(79,70,229,0.4)] hover:shadow-[0_15px_50px_rgba(79,70,229,0.6)] transition-all transform hover:-translate-y-1"
+                className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-lg text-slate-800 bg-indigo-600 hover:bg-indigo-700 shadow-[0_10px_40px_rgba(79,70,229,0.4)] hover:shadow-[0_15px_50px_rgba(79,70,229,0.6)] transition-all transform hover:-translate-y-1"
               >
                 Get Started for Free
               </button>
@@ -129,7 +129,7 @@ const Landing = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-32 bg-slate-900 text-white relative overflow-hidden">
+      <section className="py-32 bg-slate-900 text-slate-800 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
           <BrainCircuit className="w-16 h-16 text-indigo-400 mx-auto mb-8" />

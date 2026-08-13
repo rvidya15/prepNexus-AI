@@ -50,14 +50,14 @@ const Dashboard = () => {
               } catch(e) {}
             }}
           >
-            <BrainCircuit className="text-neonCyan w-5 h-5" />
-            <span className="text-neonCyan font-bold">{user?.aiTokens ?? 20} Tokens</span>
+            <BrainCircuit className="text-indigo-600 w-5 h-5" />
+            <span className="text-indigo-600 font-bold">{user?.aiTokens ?? 20} Tokens</span>
           </div>
           <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-orange-500/30 shadow-sm">
             <Flame className="text-orange-500 w-5 h-5" />
             <span className="text-orange-500 font-bold">{streak} Day Streak!</span>
           </div>
-          <button onClick={handleLogout} className="text-gray-400 hover:text-white transition hover:text-red-400" title="Logout">
+          <button onClick={handleLogout} className="text-gray-400 hover:text-slate-800 transition hover:text-red-400" title="Logout">
             <LogOut className="w-5 h-5" />
           </button>
         </div>
@@ -110,7 +110,7 @@ const Dashboard = () => {
                           onClick={() => {
                             alert("To complete this review, chat with the NexaPrep Guide!");
                           }}
-                          className="px-4 py-2 rounded-lg bg-red-500 text-white font-bold hover:bg-red-600 transition text-sm"
+                          className="px-4 py-2 rounded-lg bg-red-500 text-slate-800 font-bold hover:bg-red-600 transition text-sm"
                         >
                           Review Now
                         </button>
