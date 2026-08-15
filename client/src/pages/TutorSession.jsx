@@ -29,9 +29,11 @@ const TutorSession = () => {
         content: res.data.reply
       }]);
     } catch (err) {
+      console.error("TutorSession Error:", err);
+      const serverError = err.response?.data?.error || err.message;
       setMessages([...newMsgs, { 
         role: 'ai', 
-        content: err.response?.status === 402 ? "You're out of tokens! Please buy more." : "Sorry, I am having trouble connecting to my neural net right now! Please check your API Key settings."
+        content: err.response?.status === 402 ? "You're out of tokens! Please buy more." : `Sorry, I encountered an error: ${serverError}`
       }]);
     } finally {
       setIsLoading(false);
@@ -43,7 +45,7 @@ const TutorSession = () => {
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-3xl h-[85vh]  bg-white/90 backdrop-blur-xl border  border-indigo-200 rounded-2xl shadow-xl flex flex-col overflow-hidden"
+        className="w-full max-w-5xl h-[85vh]  bg-white/90 backdrop-blur-xl border  border-indigo-200 rounded-2xl shadow-xl flex flex-col overflow-hidden"
       >
         {/* Header */}
         <div className="p-4 border-b  border-indigo-100 flex items-center gap-4  bg-indigo-50/50">
