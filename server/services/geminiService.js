@@ -144,9 +144,79 @@ const generateRevisionSheet = async (topic, userLevel) => {
   }
 };
 
+/**
+ * Generates a full syllabus tree for a target exam.
+ * Uses Pro model for structured comprehensive data.
+ */
+const generateSyllabus = async (targetExam) => {
+  console.log(`[AI Engine] Generating Syllabus for ${targetExam}...`);
+  if (!ai) return { subjects: [{ name: "Simulated Subject", topics: [{ name: "Simulated Topic", subtopics: ["Simulated Subtopic 1", "Simulated Subtopic 2"] }] }] };
+  
+  const prompt = `You are an expert curriculum designer. Create a comprehensive, highly accurate syllabus for the exam: "${targetExam}".
+  Return ONLY a valid JSON object strictly matching this schema:
+  {
+    "subjects": [
+      {
+        "name": "Subject Name",
+        "topics": [
+          {
+            "name": "Topic Name",
+            "subtopics": ["Subtopic 1", "Subtopic 2"]
+          }
+        ]
+      }
+    ]
+  }
+  Do not include markdown blocks or any other text. Return ONLY the raw JSON string.`;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-3.5-flash',
+      contents: prompt
+    });
+    const cleanJson = response.text.replace(/```json/g, '').replace(/```/g, '').trim();
+    return JSON.parse(cleanJson);
+  } catch (err) {
+    console.error("Gemini Syllabus Error:", err);
+    throw err;
+  }
+};
+
+/**
+ * Generates concise study notes for a specific topic/subtopic.
+ */
+const generateTopicInfo = async (topic, targetExam) => {
+  console.log(`[AI Engine] Generating Topic Info for ${topic} (${targetExam})`);
+  if (!ai) return { summary: "Simulated summary of the topic.", keyPoints: ["Point 1", "Point 2"], sampleQuestion: "Simulated Question?" };
+  
+  const prompt = `You are a tutor helping a student prepare for the "${targetExam}" exam.
+  Provide a concise, high-yield study guide for the topic/subtopic: "${topic}".
+  Return ONLY a valid JSON object matching this schema:
+  {
+    "summary": "A 2-3 sentence overview of the topic.",
+    "keyPoints": ["Important formula or fact 1", "Important fact 2"],
+    "sampleQuestion": "A quick Previous Year Question or sample question to test understanding."
+  }
+  Do not include markdown blocks or any other text. Return ONLY the raw JSON string.`;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-3.5-flash',
+      contents: prompt
+    });
+    const cleanJson = response.text.replace(/```json/g, '').replace(/```/g, '').trim();
+    return JSON.parse(cleanJson);
+  } catch (err) {
+    console.error("Gemini Topic Info Error:", err);
+    throw err;
+  }
+};
+
 module.exports = {
   generateAdaptiveQuiz,
   analyzePYQTrend,
   handleTutorDoubt,
-  generateRevisionSheet
+  generateRevisionSheet,
+  generateSyllabus,
+  generateTopicInfo
 };

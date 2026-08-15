@@ -16,6 +16,9 @@ const userSchema = new mongoose.Schema({
     preparationStyle: { type: String },
     specificGoals: { type: String }
   },
+  
+  // Dynamically Generated Syllabus
+  syllabus: { type: mongoose.Schema.Types.Mixed },
 
   // Monetization & AI Credits
   aiTokens: {

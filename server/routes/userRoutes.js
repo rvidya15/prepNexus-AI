@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { protect } = require('../middleware/auth');
+const { generateSyllabus } = require('../services/geminiService');
 
 // Utility to generate JWT
 const generateToken = (id) => {
@@ -83,6 +84,31 @@ router.put('/profile', protect, async (req, res) => {
 
     await user.save();
     res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// @route GET /api/users/syllabus
+router.get('/syllabus', protect, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    // Return existing syllabus if cached
+    if (user.syllabus) {
+      return res.json(user.syllabus);
+    }
+
+    // Generate new syllabus using AI
+    const targetExam = user.academicProfile?.targetExam || 'General Knowledge';
+    const syllabus = await generateSyllabus(targetExam);
+
+    // Save to user object
+    user.syllabus = syllabus;
+    await user.save();
+
+    res.json(syllabus);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

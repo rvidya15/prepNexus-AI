@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { handleTutorDoubt, generateRevisionSheet, generateAdaptiveQuiz, analyzePYQTrend } = require('../services/geminiService');
+const { handleTutorDoubt, generateRevisionSheet, generateAdaptiveQuiz, analyzePYQTrend, generateTopicInfo } = require('../services/geminiService');
 const { protect } = require('../middleware/auth');
 const { checkAiCredits } = require('../middleware/creditSystem');
 
@@ -44,6 +44,18 @@ router.post('/pyq', protect, checkAiCredits, async (req, res) => {
   try {
     const { questionText, examMetadata } = req.body;
     const response = await analyzePYQTrend(questionText, examMetadata);
+    res.json(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// @route POST /api/ai/topic-info
+router.post('/topic-info', protect, checkAiCredits, async (req, res) => {
+  try {
+    const { topic } = req.body;
+    const userLevel = req.user.academicProfile?.targetExam || 'General';
+    const response = await generateTopicInfo(topic, userLevel);
     res.json(response);
   } catch (error) {
     res.status(500).json({ error: error.message });
