@@ -62,9 +62,9 @@ const Dashboard = () => {
         </div>
       </header>
 
-      </header>
-
-      {/* Main Content */}
+    </div>
+  );
+};
       <SyllabusExplorer />
     </div>
   );
