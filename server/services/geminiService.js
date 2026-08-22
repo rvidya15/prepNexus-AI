@@ -128,7 +128,7 @@ const generateRevisionSheet = async (topic, userLevel) => {
   const prompt = `You are an expert tutor for a student at the "${userLevel}" level. 
   Create a highly visual revision sheet for the topic: "${topic}".
   Return ONLY a valid JSON object containing exactly two fields:
-  1. "mermaid_diagram_syntax": A string containing valid Mermaid JS syntax (graph TD) representing a concept mind map of the topic. Ensure you escape all quotes and newlines properly (use \\n). Do not include markdown code block ticks inside the string.
+  1. "mermaid_diagram_syntax": A string containing valid Mermaid JS syntax (graph TD) representing a concept mind map of the topic. CRITICAL: You MUST write the entire mermaid syntax on a SINGLE LINE. Use semicolons (;) to separate statements instead of newlines. DO NOT output any actual newlines or unescaped characters inside this string.
   2. "flashcard": An object with "question" (string) and "answer" (string) representing the most high-yield concept to remember.`;
 
   try {
@@ -137,17 +137,24 @@ const generateRevisionSheet = async (topic, userLevel) => {
       contents: prompt
     });
     
-    // Better JSON parsing
+    // Robust JSON parsing
     let rawText = response.text;
     const startIdx = rawText.indexOf('{');
     const endIdx = rawText.lastIndexOf('}');
     if (startIdx !== -1 && endIdx !== -1) {
       rawText = rawText.substring(startIdx, endIdx + 1);
     }
+    // Attempt to manually escape any rogue newlines in the string just in case
+    rawText = rawText.replace(/\n/g, "\\n").replace(/\r/g, "");
+    
     return JSON.parse(rawText);
   } catch (err) {
     console.error("Gemini Flash Error:", err);
-    throw err;
+    // Return a safe fallback rather than throwing 500 to the frontend
+    return { 
+      mermaid_diagram_syntax: `graph TD; A[Error generating map] --> B[Check server logs];`, 
+      flashcard: { question: "Failed to generate question.", answer: "Please try again." }
+    };
   }
 };
 
