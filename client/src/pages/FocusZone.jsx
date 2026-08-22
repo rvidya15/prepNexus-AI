@@ -108,12 +108,12 @@ const FocusZone = () => {
             <iframe 
               width="100%" 
               height="100%" 
-              src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&controls=0&modestbranding=1" 
+              src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1&mute=1&controls=0&modestbranding=1&loop=1&playlist=5qap5aO4i9A" 
               title="Lofi Girl" 
               frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
-              className="absolute inset-0 z-0 pointer-events-none opacity-80 mix-blend-screen"
+              className="absolute inset-0 z-0 opacity-80 mix-blend-screen"
             ></iframe>
             
             <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
