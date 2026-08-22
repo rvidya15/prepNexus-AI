@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, BrainCircuit, BookOpen, Flame, Trophy, Clock, LogOut } from 'lucide-react';
+import { Home, BrainCircuit, BookOpen, Flame, Trophy, Clock, LogOut, Headphones, Layers } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
 
 const Sidebar = () => {
@@ -16,6 +16,8 @@ const Sidebar = () => {
     { name: 'Revision', path: '/revision', icon: <Flame className="w-5 h-5" /> },
     { name: 'PYQ Analyzer', path: '/pyqs', icon: <BrainCircuit className="w-5 h-5" /> },
     { name: 'My Notes', path: '/notes', icon: <BookOpen className="w-5 h-5" /> },
+    { name: 'Smart Flashcards', path: '/flashcards', icon: <Layers className="w-5 h-5" /> },
+    { name: 'Focus Zone', path: '/focus', icon: <Headphones className="w-5 h-5" /> },
     { name: 'Study History', path: '/history', icon: <Clock className="w-5 h-5" /> },
   ];
 

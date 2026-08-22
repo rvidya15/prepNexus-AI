@@ -11,6 +11,8 @@ import PYQBrowser from './pages/PYQBrowser';
 import WeeklyQuiz from './pages/WeeklyQuiz';
 import Landing from './pages/Landing';
 import History from './pages/History';
+import FocusZone from './pages/FocusZone';
+import Flashcards from './pages/Flashcards';
 import { useAuthStore } from './store/useAuthStore';
 import AppLayout from './components/layout/AppLayout';
 
@@ -59,6 +61,8 @@ function App() {
         <Route path="/pyqs" element={<ProtectedRoute><PYQBrowser /></ProtectedRoute>} />
         <Route path="/quiz" element={<ProtectedRoute><WeeklyQuiz /></ProtectedRoute>} />
         <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
+        <Route path="/focus" element={<ProtectedRoute><FocusZone /></ProtectedRoute>} />
+        <Route path="/flashcards" element={<ProtectedRoute><Flashcards /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
