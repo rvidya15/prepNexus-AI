@@ -128,7 +128,7 @@ const generateRevisionSheet = async (topic, userLevel) => {
   const prompt = `You are an expert tutor for a student at the "${userLevel}" level. 
   Create a highly visual revision sheet for the topic: "${topic}".
   Return ONLY a valid JSON object containing exactly two fields:
-  1. "mermaid_diagram_syntax": A string containing valid Mermaid JS syntax (graph TD) representing a concept mind map of the topic. Do not include markdown code block ticks inside the string.
+  1. "mermaid_diagram_syntax": A string containing valid Mermaid JS syntax (graph TD) representing a concept mind map of the topic. Ensure you escape all quotes and newlines properly (use \\n). Do not include markdown code block ticks inside the string.
   2. "flashcard": An object with "question" (string) and "answer" (string) representing the most high-yield concept to remember.`;
 
   try {
@@ -136,8 +136,15 @@ const generateRevisionSheet = async (topic, userLevel) => {
       model: 'gemini-3.5-flash',
       contents: prompt
     });
-    const cleanJson = response.text.replace(/```json/g, '').replace(/```/g, '').trim();
-    return JSON.parse(cleanJson);
+    
+    // Better JSON parsing
+    let rawText = response.text;
+    const startIdx = rawText.indexOf('{');
+    const endIdx = rawText.lastIndexOf('}');
+    if (startIdx !== -1 && endIdx !== -1) {
+      rawText = rawText.substring(startIdx, endIdx + 1);
+    }
+    return JSON.parse(rawText);
   } catch (err) {
     console.error("Gemini Flash Error:", err);
     throw err;

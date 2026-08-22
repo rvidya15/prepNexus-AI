@@ -140,4 +140,26 @@ router.get('/resources', protect, async (req, res) => {
   }
 });
 
+// @route POST /api/users/complete-topic
+router.post('/complete-topic', protect, async (req, res) => {
+  try {
+    const { topicName } = req.body;
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    if (!user.completedTopics) {
+      user.completedTopics = [];
+    }
+
+    if (!user.completedTopics.includes(topicName)) {
+      user.completedTopics.push(topicName);
+      await user.save();
+    }
+
+    res.json(user.completedTopics);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;

@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
   // Dynamically Generated Syllabus
   syllabus: { type: mongoose.Schema.Types.Mixed },
   resources: { type: mongoose.Schema.Types.Mixed },
+  completedTopics: [{ type: String }],
 
   // Monetization & AI Credits
   aiTokens: {

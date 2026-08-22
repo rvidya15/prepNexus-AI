@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronRight, Loader2, FileText, Zap, BrainCircuit, ArrowLeft, BookOpen, Bookmark } from 'lucide-react';
 
 const SyllabusExplorer = () => {
@@ -19,9 +19,22 @@ const SyllabusExplorer = () => {
   const [resources, setResources] = useState(null);
   const [loadingResources, setLoadingResources] = useState(false);
 
+  // Completion State
+  const [completedTopicsLocal, setCompletedTopicsLocal] = useState([]);
+  const [markingComplete, setMarkingComplete] = useState(false);
+
   useEffect(() => {
     fetchSyllabus();
+    fetchProfileData();
   }, []);
+
+  const fetchProfileData = async () => {
+    try {
+      const api = (await import('../../api/axiosConfig')).default;
+      const res = await api.get('/users/profile');
+      if (res.data.completedTopics) setCompletedTopicsLocal(res.data.completedTopics);
+    } catch (err) { }
+  };
 
   const fetchSyllabus = async () => {
     try {
@@ -76,6 +89,29 @@ const SyllabusExplorer = () => {
     fetchTopicInfo(topicName);
   };
 
+  const handleMarkComplete = async () => {
+    try {
+      setMarkingComplete(true);
+      const api = (await import('../../api/axiosConfig')).default;
+      const res = await api.post('/users/complete-topic', { topicName: selectedTopic });
+      setCompletedTopicsLocal(res.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setMarkingComplete(false);
+    }
+  };
+
+  const getSubjectCompletion = (subject) => {
+    if (!subject.topics || subject.topics.length === 0) return 0;
+    let totalTopics = subject.topics.length;
+    let completedCount = 0;
+    subject.topics.forEach(t => {
+      if (completedTopicsLocal.includes(t.name)) completedCount++;
+    });
+    return totalTopics === 0 ? 0 : Math.round((completedCount / totalTopics) * 100);
+  };
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-96">
@@ -96,13 +132,23 @@ const SyllabusExplorer = () => {
 
   // Topic Info View (Deepest level)
   if (selectedTopic) {
+    const isCompleted = completedTopicsLocal.includes(selectedTopic);
     return (
       <div>
         <button onClick={() => setSelectedTopic(null)} className="flex items-center gap-2 text-gray-500 hover:text-gray-900 mb-6 font-semibold">
           <ArrowLeft className="w-5 h-5" /> Back to {selectedSubject.name}
         </button>
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 max-w-4xl">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">{selectedTopic}</h2>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <h2 className="text-2xl font-bold text-gray-900">{selectedTopic}</h2>
+            <button 
+              onClick={handleMarkComplete}
+              disabled={isCompleted || markingComplete}
+              className={`px-5 py-2 rounded-full font-bold shadow-sm transition whitespace-nowrap ${isCompleted ? 'bg-green-100 text-green-700' : 'bg-[#5a4bda] text-white hover:bg-indigo-700'}`}
+            >
+              {isCompleted ? 'Completed ✓' : markingComplete ? 'Marking...' : 'Mark as Completed'}
+            </button>
+          </div>
           
           {loadingInfo ? (
             <div className="flex flex-col items-center py-20">
@@ -154,16 +200,24 @@ const SyllabusExplorer = () => {
              <h2 className="text-2xl font-bold text-gray-900">{selectedSubject.name}</h2>
           </div>
           <div className="divide-y divide-gray-100">
-            {selectedSubject.topics?.map((topic, tIdx) => (
-              <div 
-                key={tIdx} 
-                onClick={() => handleSelectTopic(topic.name)}
-                className="p-4 hover:bg-gray-50 cursor-pointer transition flex items-center justify-between group"
-              >
-                <div className="font-semibold text-gray-700 group-hover:text-[#5a4bda] transition">{topic.name}</div>
-                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-[#5a4bda]" />
-              </div>
-            ))}
+            {selectedSubject.topics?.map((topic, tIdx) => {
+              const isComp = completedTopicsLocal.includes(topic.name);
+              return (
+                <div 
+                  key={tIdx} 
+                  onClick={() => handleSelectTopic(topic.name)}
+                  className="p-4 hover:bg-gray-50 cursor-pointer transition flex items-center justify-between group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-2 h-2 rounded-full ${isComp ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+                    <div className={`font-semibold transition ${isComp ? 'text-gray-400 line-through' : 'text-gray-700 group-hover:text-[#5a4bda]'}`}>
+                      {topic.name}
+                    </div>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-[#5a4bda]" />
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>
@@ -190,30 +244,32 @@ const SyllabusExplorer = () => {
 
       {activeTab === 'subjects' ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {syllabus.subjects.map((subject, idx) => (
+          {syllabus.subjects.map((subject, idx) => {
+            const percent = getSubjectCompletion(subject);
+            return (
             <div 
               key={idx} 
               onClick={() => setSelectedSubject(subject)}
               className="bg-white rounded-xl p-4 border border-gray-200 hover:shadow-md transition cursor-pointer flex items-center justify-between group"
             >
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded border border-blue-100 bg-blue-50 text-blue-600 font-bold text-sm flex items-center justify-center capitalize">
+                <div className="w-10 h-10 rounded border border-blue-100 bg-blue-50 text-blue-600 font-bold text-sm flex items-center justify-center capitalize shrink-0">
                   {subject.name.substring(0, 2)}
                 </div>
                 <span className="font-semibold text-gray-800 text-[15px] line-clamp-1">{subject.name}</span>
               </div>
               
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 shrink-0">
                 <div className="flex flex-col items-end gap-1">
-                  <span className="text-xs font-bold text-gray-500">0%</span>
+                  <span className="text-xs font-bold text-gray-500">{percent}%</span>
                   <div className="w-8 h-1 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="w-0 h-full bg-green-500 rounded-full"></div>
+                    <div className="h-full bg-green-500 rounded-full transition-all duration-500" style={{ width: `${percent}%`}}></div>
                   </div>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-700" />
               </div>
             </div>
-          ))}
+          )})}
         </div>
       ) : (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
