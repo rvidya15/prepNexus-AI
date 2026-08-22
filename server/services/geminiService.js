@@ -212,11 +212,52 @@ const generateTopicInfo = async (topic, targetExam) => {
   }
 };
 
+/**
+ * Generates recommended books and syllabus overview for a target exam.
+ */
+const generateResources = async (targetExam) => {
+  console.log(`[AI Engine] Generating Resources for ${targetExam}...`);
+  if (!ai) return { 
+    overview: "Simulated Syllabus Overview.", 
+    books: [
+      { title: "Simulated Book 1", author: "Author A", description: "Standard textbook." },
+      { title: "Simulated Book 2", author: "Author B", description: "Reference guide." }
+    ] 
+  };
+  
+  const prompt = `You are an expert academic counselor. For the exam "${targetExam}", provide a brief syllabus overview and a list of the 3-5 most highly recommended standard books for preparation.
+  Return ONLY a valid JSON object matching this schema:
+  {
+    "overview": "A 2-3 paragraph summary of the exam syllabus structure and weightage.",
+    "books": [
+      {
+        "title": "Book Title",
+        "author": "Author Name",
+        "description": "Why this book is recommended."
+      }
+    ]
+  }
+  Do not include markdown blocks or any other text. Return ONLY the raw JSON string.`;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-3.5-flash',
+      contents: prompt
+    });
+    const cleanJson = response.text.replace(/```json/g, '').replace(/```/g, '').trim();
+    return JSON.parse(cleanJson);
+  } catch (err) {
+    console.error("Gemini Resources Error:", err);
+    throw err;
+  }
+};
+
 module.exports = {
   generateAdaptiveQuiz,
   analyzePYQTrend,
   handleTutorDoubt,
   generateRevisionSheet,
   generateSyllabus,
-  generateTopicInfo
+  generateTopicInfo,
+  generateResources
 };

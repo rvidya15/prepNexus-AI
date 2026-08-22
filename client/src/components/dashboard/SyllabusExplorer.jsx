@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, Loader2, FileText, Zap, BrainCircuit, ArrowLeft } from 'lucide-react';
+import { ChevronRight, Loader2, FileText, Zap, BrainCircuit, ArrowLeft, BookOpen, Bookmark } from 'lucide-react';
 
 const SyllabusExplorer = () => {
   const [syllabus, setSyllabus] = useState(null);
@@ -13,6 +13,11 @@ const SyllabusExplorer = () => {
   
   const [topicInfo, setTopicInfo] = useState(null);
   const [loadingInfo, setLoadingInfo] = useState(false);
+
+  // Main Tab State
+  const [activeTab, setActiveTab] = useState('subjects');
+  const [resources, setResources] = useState(null);
+  const [loadingResources, setLoadingResources] = useState(false);
 
   useEffect(() => {
     fetchSyllabus();
@@ -28,6 +33,27 @@ const SyllabusExplorer = () => {
       setError("Failed to generate your personalized syllabus. Please check your API key or try again later.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchResources = async () => {
+    if (resources) return; // Already cached locally
+    try {
+      setLoadingResources(true);
+      const api = (await import('../../api/axiosConfig')).default;
+      const res = await api.get('/users/resources');
+      setResources(res.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingResources(false);
+    }
+  };
+
+  const handleTabSwitch = (tab) => {
+    setActiveTab(tab);
+    if (tab === 'resources') {
+      fetchResources();
     }
   };
 
@@ -144,44 +170,88 @@ const SyllabusExplorer = () => {
     );
   }
 
-  // Main Subjects Grid View (Matching PW Reference)
+  // Main Tabbed View (Subjects or Resources)
   return (
     <div>
       <div className="flex border-b border-gray-200 mb-6">
-        <button className="px-6 py-3 border-b-2 border-[#5a4bda] text-[#5a4bda] font-bold text-sm tracking-wide">
+        <button 
+          onClick={() => handleTabSwitch('subjects')}
+          className={`px-6 py-3 font-bold text-sm tracking-wide ${activeTab === 'subjects' ? 'border-b-2 border-[#5a4bda] text-[#5a4bda]' : 'text-gray-500 hover:text-gray-900'}`}
+        >
           Subjects
         </button>
-        <button className="px-6 py-3 text-gray-500 font-bold text-sm tracking-wide hover:text-gray-900">
+        <button 
+          onClick={() => handleTabSwitch('resources')}
+          className={`px-6 py-3 font-bold text-sm tracking-wide ${activeTab === 'resources' ? 'border-b-2 border-[#5a4bda] text-[#5a4bda]' : 'text-gray-500 hover:text-gray-900'}`}
+        >
           Resources
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {syllabus.subjects.map((subject, idx) => (
-          <div 
-            key={idx} 
-            onClick={() => setSelectedSubject(subject)}
-            className="bg-white rounded-xl p-4 border border-gray-200 hover:shadow-md transition cursor-pointer flex items-center justify-between group"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded border border-blue-100 bg-blue-50 text-blue-600 font-bold text-sm flex items-center justify-center capitalize">
-                {subject.name.substring(0, 2)}
+      {activeTab === 'subjects' ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {syllabus.subjects.map((subject, idx) => (
+            <div 
+              key={idx} 
+              onClick={() => setSelectedSubject(subject)}
+              className="bg-white rounded-xl p-4 border border-gray-200 hover:shadow-md transition cursor-pointer flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded border border-blue-100 bg-blue-50 text-blue-600 font-bold text-sm flex items-center justify-center capitalize">
+                  {subject.name.substring(0, 2)}
+                </div>
+                <span className="font-semibold text-gray-800 text-[15px] line-clamp-1">{subject.name}</span>
               </div>
-              <span className="font-semibold text-gray-800 text-[15px] line-clamp-1">{subject.name}</span>
+              
+              <div className="flex items-center gap-4">
+                <div className="flex flex-col items-end gap-1">
+                  <span className="text-xs font-bold text-gray-500">0%</span>
+                  <div className="w-8 h-1 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="w-0 h-full bg-green-500 rounded-full"></div>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-700" />
+              </div>
             </div>
-            
-            <div className="flex items-center gap-4">
-              <div className="flex flex-col items-end gap-1">
-                <span className="text-xs font-bold text-gray-500">0%</span>
-                <div className="w-8 h-1 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="w-0 h-full bg-green-500 rounded-full"></div>
+          ))}
+        </div>
+      ) : (
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+          {loadingResources ? (
+            <div className="flex flex-col items-center justify-center py-20">
+              <Loader2 className="w-10 h-10 text-[#5a4bda] animate-spin mb-4" />
+              <p className="text-gray-500">Curating the best resources for your exam...</p>
+            </div>
+          ) : resources ? (
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <BookOpen className="w-6 h-6 text-[#5a4bda]" /> Syllabus Overview
+                </h3>
+                <div className="p-5 bg-indigo-50/50 rounded-xl text-gray-700 leading-relaxed border border-indigo-100/50">
+                  {resources.overview}
                 </div>
               </div>
-              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-700" />
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <Bookmark className="w-6 h-6 text-orange-500" /> Highly Recommended Books
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {resources.books?.map((book, idx) => (
+                    <div key={idx} className="p-5 bg-white border border-gray-100 shadow-sm rounded-xl hover:shadow-md transition group">
+                      <h4 className="font-bold text-gray-900 text-lg group-hover:text-[#5a4bda] transition">{book.title}</h4>
+                      <p className="text-sm font-semibold text-gray-500 mb-3">By {book.author}</p>
+                      <p className="text-gray-600 text-sm leading-relaxed">{book.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ) : (
+            <div className="text-red-500">Failed to load resources.</div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

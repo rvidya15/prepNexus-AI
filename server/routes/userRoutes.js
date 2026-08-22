@@ -114,4 +114,30 @@ router.get('/syllabus', protect, async (req, res) => {
   }
 });
 
+// @route GET /api/users/resources
+router.get('/resources', protect, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    // Return existing resources if cached
+    if (user.resources) {
+      return res.json(user.resources);
+    }
+
+    // Generate new resources using AI
+    const targetExam = user.academicProfile?.targetExam || 'General Knowledge';
+    const { generateResources } = require('../services/geminiService');
+    const resources = await generateResources(targetExam);
+
+    // Save to user object
+    user.resources = resources;
+    await user.save();
+
+    res.json(resources);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
