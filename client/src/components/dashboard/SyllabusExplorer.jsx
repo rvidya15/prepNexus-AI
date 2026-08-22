@@ -71,7 +71,7 @@ const SyllabusExplorer = () => {
   // Topic Info View (Deepest level)
   if (selectedTopic) {
     return (
-      <div className="p-8 bg-[#f8f9fa] min-h-screen">
+      <div>
         <button onClick={() => setSelectedTopic(null)} className="flex items-center gap-2 text-gray-500 hover:text-gray-900 mb-6 font-semibold">
           <ArrowLeft className="w-5 h-5" /> Back to {selectedSubject.name}
         </button>
@@ -116,7 +116,7 @@ const SyllabusExplorer = () => {
   // Subject Details View (Topics List)
   if (selectedSubject) {
     return (
-      <div className="p-8 bg-[#f8f9fa] min-h-screen">
+      <div>
         <button onClick={() => setSelectedSubject(null)} className="flex items-center gap-2 text-gray-500 hover:text-gray-900 mb-6 font-semibold">
           <ArrowLeft className="w-5 h-5" /> Back to Subjects
         </button>
@@ -146,7 +146,7 @@ const SyllabusExplorer = () => {
 
   // Main Subjects Grid View (Matching PW Reference)
   return (
-    <div className="p-8 bg-[#f8f9fa] min-h-screen">
+    <div>
       <div className="flex border-b border-gray-200 mb-6">
         <button className="px-6 py-3 border-b-2 border-[#5a4bda] text-[#5a4bda] font-bold text-sm tracking-wide">
           Subjects

@@ -1,9 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { 
-  BookOpen, Edit3, MonitorPlay, Library, LayoutGrid, 
-  FileText, ClipboardList, GraduationCap, MapPin, LogOut, Code
-} from 'lucide-react';
+import { Home, BrainCircuit, BookOpen, Flame, Trophy, Clock, LogOut } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
 
 const Sidebar = () => {
@@ -12,105 +9,65 @@ const Sidebar = () => {
   const logout = useAuthStore(state => state.logout);
   const user = useAuthStore(state => state.user);
 
-  const sections = [
-    {
-      title: "LEARN ONLINE",
-      items: [
-        { name: 'Study', path: '/dashboard', icon: <Edit3 className="w-5 h-5" /> },
-        { name: 'Pi', path: '/tutor', icon: <MonitorPlay className="w-5 h-5" />, badge: 'NEW' },
-        { name: 'Library', path: '/notes', icon: <BookOpen className="w-5 h-5" /> },
-      ]
-    },
-    {
-      title: "STUDY PACKS",
-      items: [
-        { name: 'Batches', path: '/history', icon: <MonitorPlay className="w-5 h-5" /> },
-        { name: 'Test Series', path: '/quiz', icon: <FileText className="w-5 h-5" /> },
-        { name: 'My Test', path: '/pyqs', icon: <ClipboardList className="w-5 h-5" /> },
-        { name: 'Scholarship', path: '/revision', icon: <GraduationCap className="w-5 h-5" /> },
-      ]
-    },
-    {
-      title: "OFFLINE",
-      items: [
-        { name: 'NexaPrep Centres', path: '/centres', icon: <MapPin className="w-5 h-5" /> },
-      ]
-    }
+  const navItems = [
+    { name: 'Dashboard', path: '/dashboard', icon: <Home className="w-5 h-5" /> },
+    { name: 'Smart Tutor', path: '/tutor', icon: <BrainCircuit className="w-5 h-5" /> },
+    { name: 'Weekly Quiz', path: '/quiz', icon: <Trophy className="w-5 h-5" /> },
+    { name: 'Revision', path: '/revision', icon: <Flame className="w-5 h-5" /> },
+    { name: 'PYQ Analyzer', path: '/pyqs', icon: <BrainCircuit className="w-5 h-5" /> },
+    { name: 'My Notes', path: '/notes', icon: <BookOpen className="w-5 h-5" /> },
+    { name: 'Study History', path: '/history', icon: <Clock className="w-5 h-5" /> },
   ];
 
   return (
-    <div className="h-screen w-[260px] flex flex-col border-r bg-white border-gray-200 text-gray-800 shrink-0 shadow-[2px_0_10px_rgba(0,0,0,0.02)]">
-      
-      {/* Brand Header */}
-      <div className="px-6 py-5 flex items-center gap-3 border-b border-gray-100">
-        <div className="bg-gray-900 rounded-full p-1.5 flex items-center justify-center">
-           <Code className="w-6 h-6 text-white" />
+    <div className={`h-screen w-64 flex flex-col border-r backdrop-blur-xl transition-colors duration-500 shrink-0 bg-white/70 border-indigo-100 text-slate-800`}
+    >
+      <div className="p-6 flex items-center gap-3">
+        <BrainCircuit className="w-8 h-8 text-indigo-600" />
+        <h1 className="text-2xl font-bold tracking-tight">NexaPrep</h1>
+      </div>
+
+      <div className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
+        {navItems.map((item) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <button
+              key={item.path}
+              onClick={() => navigate(item.path)}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-semibold
+                ${isActive 
+                  ? 'bg-indigo-100 text-indigo-700 shadow-sm'
+                  : 'hover:bg-slate-100 text-slate-600 hover:text-slate-900'
+                }
+              `}
+            >
+              {item.icon}
+              {item.name}
+            </button>
+          )
+        })}
+      </div>
+
+      <div className="p-4 border-t border-dashed border-indigo-200">
+        <div className="flex items-center gap-3 p-3 rounded-xl mb-4 bg-slate-50 border border-indigo-100 shadow-sm">
+          <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold bg-indigo-200 text-indigo-800">
+            {user?.username?.[0]?.toUpperCase()}
+          </div>
+          <div className="overflow-hidden">
+            <p className="text-sm font-bold truncate text-slate-900">{user?.username}</p>
+            <p className="text-xs text-indigo-600">{user?.aiTokens} Tokens</p>
+          </div>
         </div>
-        <h1 className="text-xl font-bold tracking-tight text-gray-900">NexaPrep</h1>
-      </div>
 
-      {/* Navigation List */}
-      <div className="flex-1 overflow-y-auto py-6">
-        {sections.map((section, sIdx) => (
-          <div key={sIdx} className="mb-6">
-            <h2 className="px-6 text-[11px] font-bold text-gray-400 mb-3 tracking-widest uppercase">
-              {section.title}
-            </h2>
-            <div className="space-y-1">
-              {section.items.map((item) => {
-                const isActive = location.pathname === item.path;
-                return (
-                  <button
-                    key={item.path}
-                    onClick={() => navigate(item.path)}
-                    className={`w-full flex items-center justify-between px-6 py-2.5 transition-colors text-sm font-medium border-l-4
-                      ${isActive 
-                        ? 'bg-[#f4f2ff] text-[#5a4bda] border-[#5a4bda]'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-transparent'
-                      }
-                    `}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className={`${isActive ? 'text-[#5a4bda]' : 'text-gray-400'}`}>
-                        {item.icon}
-                      </div>
-                      {item.name}
-                    </div>
-                    {item.badge && (
-                      <span className="text-[10px] font-bold bg-[#ff4b4b] text-white px-1.5 py-0.5 rounded shadow-sm">
-                        {item.badge}
-                      </span>
-                    )}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* User & Logout Footer */}
-      <div className="p-4 border-t border-gray-200">
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-3 p-2">
-            <div className="w-9 h-9 rounded-full flex items-center justify-center font-bold bg-[#f4f2ff] text-[#5a4bda]">
-              {user?.username?.[0]?.toUpperCase()}
-            </div>
-            <div className="overflow-hidden">
-              <p className="text-sm font-bold truncate text-gray-900">{user?.username}</p>
-              <p className="text-xs text-gray-500">{user?.aiTokens} Tokens</p>
-            </div>
-          </div>
+        <div className="flex gap-2">
           <button 
             onClick={() => { logout(); navigate('/login'); }}
-            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors"
+            className="w-full flex items-center justify-center gap-2 p-3 rounded-xl transition bg-slate-100 text-red-600 hover:bg-red-50 hover:text-red-700 font-bold"
           >
-            <LogOut className="w-5 h-5 text-gray-400" />
-            Sign Out
+            <LogOut className="w-5 h-5" /> Sign Out
           </button>
         </div>
       </div>
-
     </div>
   );
 };

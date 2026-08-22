@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import { ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Flame, BrainCircuit, Trophy, Target, Sparkles, TrendingUp, BookOpen, Clock } from 'lucide-react';
 import SyllabusExplorer from '../components/dashboard/SyllabusExplorer';
 import { useStudyStore } from '../store/useStudyStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { useGamificationStore } from '../store/useGamificationStore';
 
 const Dashboard = () => {
-  const { fetchDashboardData } = useStudyStore();
+  const { fetchDashboardData, streak } = useStudyStore();
   const user = useAuthStore((state) => state.user);
   const syncWithProfile = useGamificationStore((state) => state.syncWithProfile);
 
@@ -21,31 +22,116 @@ const Dashboard = () => {
   }, [user, syncWithProfile]);
 
   return (
-    <div className="flex flex-col h-full bg-[#f8f9fa]">
-      {/* Top Banner */}
-      <div className="bg-[#242424] p-8 text-white flex justify-between items-center relative overflow-hidden shadow-sm">
-        {/* Decorative background curves */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] border-[40px] border-white/5 rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] border-[20px] border-white/5 rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+    <div className="p-8 bg-[#f8f9fa] min-h-screen">
+      
+      {/* Impressive Welcome Banner */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-purple-900 rounded-3xl p-8 mb-8 shadow-2xl">
+        {/* Abstract Background Shapes */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full translate-y-1/3 -translate-x-1/4 blur-2xl pointer-events-none"></div>
         
-        <div className="relative z-10">
-          <p className="text-xs font-bold text-gray-400 mb-1 uppercase tracking-widest">Your Exam Focus</p>
-          <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-black">{user?.academicProfile?.targetExam || 'General Syllabus'}</h1>
-            <ChevronRight className="w-6 h-6 text-gray-400" />
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="text-white">
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-5 h-5 text-yellow-400" />
+              <span className="text-indigo-200 font-semibold tracking-wide uppercase text-sm">Welcome back to the grind</span>
+            </div>
+            <h1 className="text-4xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200">
+              {user?.username ? `Ready to conquer, ${user.username}?` : 'Ready to conquer your exam?'}
+            </h1>
+            <p className="text-indigo-100/80 text-lg max-w-lg">
+              Your target is <strong className="text-white">{user?.academicProfile?.targetExam || 'your ultimate goal'}</strong>. Let's make today count. Select a subject below to dive into your personalized AI syllabus.
+            </p>
           </div>
-        </div>
-        
-        <div className="relative z-10 flex items-center gap-4">
-          <button className="px-6 py-2 bg-white text-gray-900 rounded-full font-bold text-sm shadow-sm hover:bg-gray-100 transition">
-            UPGRADE
-          </button>
+          
+          {/* Quick Stats Grid inside Banner */}
+          <div className="flex items-center gap-4">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex flex-col items-center justify-center min-w-[120px]">
+              <Flame className="w-8 h-8 text-orange-400 mb-2" />
+              <span className="text-2xl font-bold text-white">{streak || 0}</span>
+              <span className="text-xs text-indigo-200 uppercase font-bold tracking-wider">Day Streak</span>
+            </div>
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex flex-col items-center justify-center min-w-[120px]">
+              <BrainCircuit className="w-8 h-8 text-cyan-400 mb-2" />
+              <span className="text-2xl font-bold text-white">{user?.aiTokens || 20}</span>
+              <span className="text-xs text-indigo-200 uppercase font-bold tracking-wider">AI Tokens</span>
+            </div>
+            <div className="hidden lg:flex bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex-col items-center justify-center min-w-[120px]">
+              <Target className="w-8 h-8 text-pink-400 mb-2" />
+              <span className="text-2xl font-bold text-white">0%</span>
+              <span className="text-xs text-indigo-200 uppercase font-bold tracking-wider">Completion</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="flex-1">
-        <SyllabusExplorer />
+      {/* Main Content Layout */}
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
+        
+        {/* Left Column: Syllabus (Takes up 3/4 width on large screens) */}
+        <div className="xl:col-span-3">
+          <div className="flex items-center gap-3 mb-6">
+            <BookOpen className="w-6 h-6 text-indigo-600" />
+            <h2 className="text-2xl font-bold text-gray-900">Your Master Syllabus</h2>
+          </div>
+          {/* The visually stunning PW-style Subject Grid */}
+          <SyllabusExplorer />
+        </div>
+        
+        {/* Right Column: AI Recommendations & Activity (Makes dashboard look "complete") */}
+        <div className="xl:col-span-1 space-y-6">
+          
+          {/* AI Recommended Topic */}
+          <div className="bg-white rounded-2xl shadow-sm border border-indigo-50 p-6 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none group-hover:scale-110 transition-transform"></div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-gray-900 flex items-center gap-2">
+                  <BrainCircuit className="w-5 h-5 text-indigo-500" /> AI Pick
+                </h3>
+                <span className="px-2 py-1 bg-red-100 text-red-600 text-[10px] font-bold rounded uppercase">High Yield</span>
+              </div>
+              <h4 className="text-lg font-bold text-gray-800 mb-2">Modern History: Indian National Movement</h4>
+              <p className="text-sm text-gray-500 mb-4">Based on your recent tests, you need to review the events between 1905 and 1919.</p>
+              <button className="w-full py-2.5 bg-indigo-50 text-indigo-700 font-bold rounded-lg hover:bg-indigo-100 transition">
+                Start Studying
+              </button>
+            </div>
+          </div>
+
+          {/* Up Next / Schedule */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <Clock className="w-5 h-5 text-gray-400" /> Scheduled Revisions
+            </h3>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3 pb-4 border-b border-gray-50">
+                <div className="w-2 h-2 rounded-full bg-orange-400 mt-2"></div>
+                <div>
+                  <p className="font-semibold text-gray-800 text-sm">Fundamental Rights</p>
+                  <p className="text-xs text-gray-500">Polity • Due today</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 pb-4 border-b border-gray-50">
+                <div className="w-2 h-2 rounded-full bg-red-400 mt-2"></div>
+                <div>
+                  <p className="font-semibold text-gray-800 text-sm">Earthquake Waves</p>
+                  <p className="text-xs text-gray-500">Geography • Overdue</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-green-400 mt-2"></div>
+                <div>
+                  <p className="font-semibold text-gray-800 text-sm">Photosynthesis</p>
+                  <p className="text-xs text-gray-500">Biology • Tomorrow</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
+
     </div>
   );
 };
