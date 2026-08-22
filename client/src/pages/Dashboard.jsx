@@ -21,6 +21,21 @@ const Dashboard = () => {
     }
   }, [user, syncWithProfile]);
 
+  // Daily Motivational Quotes
+  const quotes = [
+    "The pain you feel today will be the strength you feel tomorrow.",
+    "Don't stop when you're tired. Stop when you're done.",
+    "Your future is created by what you do today, not tomorrow.",
+    "Discipline is choosing between what you want now, and what you want most.",
+    "Success is the sum of small efforts, repeated day in and day out.",
+    "The difference between ordinary and extraordinary is that little extra.",
+    "Push yourself, because no one else is going to do it for you."
+  ];
+  // Pick a quote based on the day of the year so it stays consistent for the day
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+  const dailyQuote = quotes[dayOfYear % quotes.length];
+
   return (
     <div className="p-8 bg-[#f8f9fa] min-h-screen">
       
@@ -31,16 +46,19 @@ const Dashboard = () => {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full translate-y-1/3 -translate-x-1/4 blur-2xl pointer-events-none"></div>
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="text-white">
+          <div className="text-white flex-1">
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="w-5 h-5 text-yellow-400" />
               <span className="text-indigo-200 font-semibold tracking-wide uppercase text-sm">Welcome back to the grind</span>
             </div>
-            <h1 className="text-4xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200">
+            <h1 className="text-4xl font-extrabold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200">
               {user?.username ? `Ready to conquer, ${user.username}?` : 'Ready to conquer your exam?'}
             </h1>
-            <p className="text-indigo-100/80 text-lg max-w-lg">
-              Your target is <strong className="text-white">{user?.academicProfile?.targetExam || 'your ultimate goal'}</strong>. Let's make today count. Select a subject below to dive into your personalized AI syllabus.
+            <div className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-2 mb-4">
+              <p className="text-indigo-100 italic text-sm font-medium">"{dailyQuote}"</p>
+            </div>
+            <p className="text-indigo-100/80 text-[15px] max-w-xl leading-relaxed">
+              Your target is <strong className="text-white">{user?.academicProfile?.targetExam || 'your ultimate goal'}</strong>. Select a subject below to dive into your personalized AI syllabus and keep your streak alive!
             </p>
           </div>
           
